@@ -127,3 +127,9 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+# drawio temp files - anything .$*
+.$*
+
+# weird windows thing
+*:Zone.Identifier
