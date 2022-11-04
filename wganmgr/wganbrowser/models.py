@@ -2,10 +2,20 @@ from django.db import models
 from os import path
 
 # Create your models here.
+class library(models.Model):
+    name = models.CharField(max_length=64,blank=False)
+    datasets_root = models.CharField(max_length=512,blank=False)
+    runs_root = models.CharField(max_length=512,blank=False)
+    snapshots_root = models.CharField(max_length=512,blank=False)
+
+    def __str__(self):
+        return self.name
+
 
 class dataset(models.Model):
     path = models.CharField(max_length=512,blank=False)
     name = models.CharField(max_length=512,blank=False)
+    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -15,6 +25,7 @@ class dataset(models.Model):
 
 class model(models.Model):
     name = models.CharField(max_length=512,blank=False)
+    library = models.ForeignKey(library,on_delete=models.CASCADE)
     dataset = models.ForeignKey(dataset,blank=False,on_delete=models.CASCADE)
     data_fast_wav = models.BooleanField(default=True)
     data_first_slice = models.BooleanField(default=False)
@@ -59,6 +70,7 @@ class modelRun(models.Model):
     model = models.ForeignKey(model,blank=False,on_delete=models.CASCADE)
     path = models.CharField(max_length=512,blank=False)
     name = models.CharField(max_length=512,blank=False)
+    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -70,14 +82,13 @@ class modelSnapshot(models.Model):
     modelRun = models.ForeignKey(modelRun,blank=False,on_delete=models.CASCADE)
     checkpoint = models.IntegerField(default=0)
     path = models.CharField(max_length=512,blank=False)
+    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.modelRun.name+'-ckpt-'+str(self.checkpoint)
 
     def path_exists(self):
         return path.isdir(self.path)
-
-
 
 
     #https://docs.djangoproject.com/en/4.1/intro/tutorial02/
