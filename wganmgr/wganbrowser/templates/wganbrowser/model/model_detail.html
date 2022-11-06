@@ -6,11 +6,11 @@
     </ul>
     </hr>
     {% if runs_with_snapshot.items %}
-        Runs for {{ model.name }}
+        Runs and latest snapshot for {{ model.name }}
         <ul>
             {% for run,snapshot in runs_with_snapshot.items %}
                 <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>
-                    : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshot available. {% endif %}</li>
+                    : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshots found. {% endif %}</li>
             {% endfor %}
         </ul>
     {% else %}
