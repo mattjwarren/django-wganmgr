@@ -1,0 +1,19 @@
+<div id="banner">{% block banner %}<p>WGANBROWSER</p>{% endblock %}</div>
+
+<div id="navigation">
+    {% block navigation %}
+        <hr></hr>
+        <a href="{% url 'wganbrowser:models' %}">Models</a>
+        <hr></hr>
+    {% endblock %}
+</div>
+
+<div id="messages">
+    {% block messages %}
+        {% if message %}{{ message }}{% endif %}
+    {% endblock %}
+</div>
+
+<div id="content">{% block content %}{% endblock %}</div>
+
+<div id="content_menu">{% block content_menu %}{% endblock %}</div>

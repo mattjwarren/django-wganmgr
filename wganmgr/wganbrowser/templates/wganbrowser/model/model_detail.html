@@ -1,25 +1,33 @@
-{% if model %}
-    Model: {{ model.name }}
-    <ul>
-        <li>Library: {{ model.library.name }}</li>
-        <li>Dataset: {{ model.dataset.name }}</li>
-    </ul>
-    </hr>
-    {% if runs_with_snapshot.items %}
-        Runs and latest snapshot for {{ model.name }}
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    {% if model %}
+        Model: {{ model.name }}
         <ul>
-            {% for run,snapshot in runs_with_snapshot.items %}
-                <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>
-                    : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshots found. {% endif %}</li>
-            {% endfor %}
+            <li>Library: {{ model.library.name }}</li>
+            <li>Dataset: {{ model.dataset.name }}</li>
         </ul>
+        </hr>
+        {% if runs_with_snapshot.items %}
+            Runs and latest snapshot for {{ model.name }}
+            <ul>
+                {% for run,snapshot in runs_with_snapshot.items %}
+                    <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>
+                        : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshots found. {% endif %}</li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No runs found.
+        {% endif %}
     {% else %}
-        No runs found.
+        <p>Model {{ model_id }} not found.</p>
     {% endif %}
-{% else %}
-    <p>Model {{ model_id }} not found.</p>
-{% endif %}
-
+{% endblock %}
+{% block content_menu %}
+    <hr></hr>
+    <a href="{% url 'wganbrowser:model_delete' model.id %}">Delete Everything!</a> | 
+    <a href="{% url 'wganbrowser:model_create' %}">Create</a>
+    <hr></hr>
+{% endblock %}
 
 
 
