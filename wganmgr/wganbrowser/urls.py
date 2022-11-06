@@ -6,13 +6,13 @@ urlpatterns = [
     #/wganbrowser
     path('', views.index, name='index'),
     #/wganbrowser/model/{model_id}/
-    path('model/<int:model_id>/',views.model_detail,name='model_detail'),
+    path('model_detail/<int:model_id>/',views.model_detail,name='model_detail'),
     #/wganbrowser/model/{model_id}/
-    path('dataset/<int:dataset_id>/',views.dataset_detail,name='dataset_detail'),
+    path('dataset_detail/<int:dataset_id>/',views.dataset_detail,name='dataset_detail'),
     #/wganbrowser/model/{model_id}/
-    path('modelrun/<int:modelrun_id>/',views.modelrun_detail,name='modelrun_detail'),
+    path('modelrun_detail/<int:modelrun_id>/',views.modelrun_detail,name='modelrun_detail'),
     #/wganbrowser/model/{model_id}/
-    path('modelsnapshot/<int:modelsnapshot_id>/',views.modelsnapshot_detail,name='modelsnapshot_detail'),
+    path('modelsnapshot_detail/<int:modelsnapshot_id>/',views.modelsnapshot_detail,name='modelsnapshot_detail'),
     #/wganbrowser/model/{model_id}/
-    path('library/<int:library_id>/',views.library_detail,name='library_detail'),
+    path('library_detail/<int:library_id>/',views.library_detail,name='library_detail'),
 ]

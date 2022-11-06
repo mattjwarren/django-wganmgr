@@ -4,18 +4,17 @@ from os import path
 # Create your models here.
 class library(models.Model):
     name = models.CharField(max_length=64,blank=False)
-    datasets_root = models.CharField(max_length=512,blank=False)
-    runs_root = models.CharField(max_length=512,blank=False)
-    snapshots_root = models.CharField(max_length=512,blank=False)
+    path = models.CharField(max_length=512,blank=False)
 
     def __str__(self):
-        return self.name
+        return self.name+'@'+self.path
 
+    def path_exists(self):
+        return path.isdir(self.path)
 
 class dataset(models.Model):
     path = models.CharField(max_length=512,blank=False)
     name = models.CharField(max_length=512,blank=False)
-    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
         return self.name
@@ -64,16 +63,15 @@ class model(models.Model):
     wavegan_latent_dim = models.IntegerField(default=64)
 
     def __str__(self):
-        return self.name
+        return str(self.library)+' : '+self.name
     
 class modelRun(models.Model):
     model = models.ForeignKey(model,blank=False,on_delete=models.CASCADE)
     path = models.CharField(max_length=512,blank=False)
     name = models.CharField(max_length=512,blank=False)
-    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.name
+        return str(self.model)+' : '+self.name
 
     def path_exists(self):
         return path.isdir(self.path)
@@ -81,11 +79,16 @@ class modelRun(models.Model):
 class modelSnapshot(models.Model):
     modelRun = models.ForeignKey(modelRun,blank=False,on_delete=models.CASCADE)
     checkpoint = models.IntegerField(default=0)
+    d_loss_svg = models.TextField(default="")
+    g_loss_svg = models.TextField(default="")
+    global_step_svg = models.TextField(default="")
+
+#path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
+#
     path = models.CharField(max_length=512,blank=False)
-    library = models.ForeignKey(library,on_delete=models.CASCADE)
 
     def __str__(self):
-        return self.modelRun.name+'-ckpt-'+str(self.checkpoint)
+        return str(self.modelRun)+' : '+str(self.checkpoint)
 
     def path_exists(self):
         return path.isdir(self.path)
