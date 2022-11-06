@@ -6,7 +6,7 @@
             <li>Library: <a href="{% url 'wganbrowser:library_detail' model.library.id %}">{{ model.library.name }}</a></li>
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' model.dataset.id %}">{{ model.dataset.name }}</a></li>
         </ul>
-        </hr>
+        <hr></hr>
         {% if runs_with_snapshot.items %}
             Runs and latest snapshot for {{ model.name }}
             <ul>
@@ -25,7 +25,8 @@
     {% else %}
         <p>Model {{ model_id }} not found.</p>
     {% endif %}
-{% endblock %}
+
+    {% endblock %}
 {% block content_menu %}
     <hr></hr>
     <a href="{% url 'wganbrowser:model_delete' model.id %}">Delete Everything!</a> | 

@@ -5,8 +5,9 @@
         <ul>
             <li>Model: <a href="{% url 'wganbrowser:model_detail' modelrun.model.id %}">{{ modelrun.model.name }}</a></li>
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' modelrun.model.dataset.id %}">{{ modelrun.model.dataset.name }}</a></li>
+            <li>Path: {{ modelrun.path }}</li>
         </ul>
-        </hr>
+        <hr></hr>
         {% if modelsnapshots %}
             Snapshots for {{ modelrun.name }}
             <ul>
@@ -17,9 +18,108 @@
         {% else %}
             No snapshots found.
         {% endif %}
+        <hr></hr>
+        Parameters for run:
+        <table>
+            <tr valign="top">
+                <td>
+                    <p><b>train_batch_size: </b>{{ modelrun.train_batch_size }}<br>
+                        Training batch size. Smaller trains faster,
+                        but learning is more erratic. Powers of 2.
+                    </p>
+                    <p><b>train_save_secs: </b>{{ modelrun.train_save_secs }}<br>
+                        How often a model checkpoint is created.
+                        This is not how often a snapshot is created.
+                    </p>
+                    <p><b>train_summary_secs: </b>{{ modelrun.train_summary_secs }}<br>
+                        How often an event summary is written.
+                        This is not how often the tensorboard view is refreshed
+                    </p>
+                    <p><b>wavegan_batchnorm: </b>{{ modelrun.wavegan_batchnorm }}<br>
+                        Should a training batch be normalized before
+                        processing?
+                    </p>
+                </td>
+                <td>
+                    <p><b>data_sample_rate: </b>{{ modelrun.data_sample_rate }}<br>
+                        Sample rate of generated audio samples.
+                    </p>
+                    <p><b>data_slice_len: </b>{{ modelrun.data_slice_len }}<br>
+                        Slice length of audio used when training
+                        and length of generated audio samples. In samples.
+                    </p>
+                    <p><b>data_first_slice: </b>{{ modelrun.data_first_slice }}<br>
+                        Use only the first slice of each training audio sample.
+                    </p>
+                    <p><b>data_pad_end: </b>{{ modelrun.data_pad_end }}<br>
+                        When training audio is shorter than slice length and using
+                        data_first_slice, pad the training audio to data_slice_len.
+                    </p>
+                    <p><b>data_overlap_ratio: </b>{{ modelrun.data_overlap_ratio }}<br>
+                        When slicing audio for training, the overlap ratio of slices.
+                    </p>
+                </td>
+                <td>
+                    <p><b>wavegan_dim: </b>{{ modelrun.wavegan_dim }}<br>
+                        Model dimensionality. Number of parameters the model uses
+                        to describe a sound.
+                    </p>
+                    <p><b>wavegan_latent_dim: </b>{{ modelrun.wavegan_latent_dim }}<br>
+                        Latent space dimensionality. The number of dimensions to
+                        the 'space' used to map the domain of generatable sounds.
+                        Best kept the same as wavegan_dim
+                    </p>
+                    <p><b>wavegan_disc_nupdates: </b>{{ modelrun.wavegan_disc_nupdates }}<br>
+                        How many discriminator learning steps are made
+                        before making a generator learning step.
+                    </p>
+                    <p><b>wavegan_disc_phaseshuffle: </b>{{ modelrun.wavegan_disc_phaseshuffle }}<br>
+                        How much phaseshuffle is applied to the discriminator
+                        to prevent it using phase discrepancies to reject the generator.
+                    </p>
+                </td>
+                <td>
+                    <p><b>wavegan_genr_upsample: </b>{{ modelrun.wavegan_genr_upsample }}<br>
+                        Upsampling strategy used by the generator. Zeros is usually best.
+                    </p>
+                    <p><b>wavegan_genr_pp: </b>{{ modelrun.wavegan_genr_pp }}<br>
+                        Does the generator also learn a noise filter?
+                    </p>
+                    <p><b>wavegan_genr_pp_len: </b>{{ modelrun.wavegan_genr_pp_len }}<br>
+                        Width of the generator noise filter in samples.
+                    </p>
+                    <p><b>wavegan_kernel_len: </b>{{ modelrun.wavegan_kernel_len }}<br>
+                        The size of the convolution window, in samples,  used by the model. Bigger
+                        may mean greater awareness of features expressed over greater
+                        time intervals.
+                    </p>
+                </td>
+                <td>
+                    <p><b>wavegan_disc_wgangp_beta1: </b>{{ modelrun.wavegan_disc_wgangp_beta1 }}<br>
+                        Adam optimizer beta1 for discriminator.
+                    </p>
+                    <p><b>wavegan_disc_wgangp_beta2: </b>{{ modelrun.wavegan_disc_wgangp_beta2 }}<br>
+                        Adam optimizer beta2 for discriminator.
+                    </p>
+                    <p><b>wavegan_disc_wgangp_learn: </b>{{ modelrun.wavegan_disc_wgangp_learn }}<br>
+                        Initial learning rate for discriminator.
+                    </p>
+                    <p><b>wavegan_genr_wgangp_beta1: </b>{{ modelrun.wavegan_genr_wgangp_beta1 }}<br>
+                        Adam optimizer beta1 for discriminator.
+                    </p>
+                    <p><b>wavegan_genr_wgangp_beta2: </b>{{ modelrun.wavegan_genr_wgangp_beta2 }}<br>
+                        Adam optimizer beta2 for discriminator.
+                    </p>
+                    <p><b>wavegan_genr_wgangp_learn: </b>{{ modelrun.wavegan_genr_wgangp_learn }}<br>
+                        Initial learning rate for discriminator.
+                    </p>
+                </td>
+            </tr>
+        </table>
     {% else %}
         <p>Model {{ model_id }} not found.</p>
     {% endif %}
+
 {% endblock %}
 {% block content_menu %}
     <hr></hr>

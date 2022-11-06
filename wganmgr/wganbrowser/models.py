@@ -4,7 +4,7 @@ from os import path
 # Create your models here.
 class library(models.Model):
     name = models.CharField(max_length=64,blank=False,unique=True)
-    path = models.CharField(max_length=512,blank=False)
+    path = models.CharField(max_length=255,blank=False,unique=True)
 
     def __str__(self):
         return self.name+'@'+self.path
@@ -20,11 +20,10 @@ class library(models.Model):
 class dataset(models.Model):
     path = models.CharField(max_length=512,blank=False)
     name = models.CharField(max_length=255,blank=False,unique=True)
-    data_first_slice = models.BooleanField(default=False)
     data_normalize = models.BooleanField(default=False)
+    data_num_channels = models.IntegerField(default=1)
     data_fast_wav = models.BooleanField(default=True)
-    data_pad_end = models.BooleanField(default=False)
-
+    
     def __str__(self):
         return self.name
 
@@ -58,32 +57,34 @@ class model(models.Model):
 
 class modelRun(models.Model):
     model = models.ForeignKey(model,blank=False,on_delete=models.CASCADE)
-    path = models.CharField(max_length=512,blank=False,unique=True)
+    path = models.CharField(max_length=255,blank=False,unique=True,help_text="The filesystem path relative to the model library root that will store this run")
     name = models.CharField(max_length=255,blank=False,unique=True)
-    train_batch_size = models.IntegerField(default=32)
-    train_save_secs = models.IntegerField(default=3600)
-    train_summary_secs = models.IntegerField(default=180)
-    wavegan_batchnorm = models.BooleanField(default=False)
-    data_num_channels = models.IntegerField(default=1)
-    data_overlap_ratio = models.FloatField(default=0.0)
-    data_sample_rate = models.IntegerField(default=44100)
-    data_slice_len = models.IntegerField(default=65536)
-    wavegan_dim = models.IntegerField(default=64)
-    wavegan_disc_nupdates = models.IntegerField(default=5)
-    wavegan_disc_phaseshuffle = models.IntegerField(default=2)
-    wavegan_disc_wgangp_beta1 = models.FloatField(default=0.5)
-    wavegan_disc_wgangp_beta2 = models.FloatField(default=0.9)
-    wavegan_disc_wgangp_learn = models.FloatField(default=0.0001)
-    wavegan_genr_pp = models.BooleanField(default=False)
-    wavegan_genr_pp_len = models.IntegerField(default=512)
+    train_batch_size = models.IntegerField(default=32,help_text="Training batch size. Smaller trains faster, but learning is more erratic. Powers of 2.")
+    train_save_secs = models.IntegerField(default=3600,help_text="How often a model checkpoint is created. This is not how often a snapshot is created.")
+    train_summary_secs = models.IntegerField(default=180,help_text="How often an event summary is written. This is not how often the tensorboard view is refreshed")
+    wavegan_batchnorm = models.BooleanField(default=False,help_text="Should a training batch be normalized before processing?")
+    data_pad_end = models.BooleanField(default=False,help_text="When training audio is shorter than slice length and using data_first_slice, pad the training audio to data_slice_len.")
+    data_first_slice = models.BooleanField(default=False,help_text="Use only the first slice of each training audio sample.")
+    data_overlap_ratio = models.FloatField(default=0.0,help_text="When slicing audio for training, the overlap ratio of slices.")
+    data_sample_rate = models.IntegerField(default=44100,help_text="Sample rate of generated audio samples.")
+    data_slice_len = models.IntegerField(default=65536,help_text="Slice length of audio used when training and length of generated audio samples. In samples.")
+    wavegan_dim = models.IntegerField(default=64,help_text="Model dimensionality. Number of parameters the model uses to describe a sound.")
+    wavegan_disc_nupdates = models.IntegerField(default=5,help_text="How many discriminator learning steps are made before making a generator learning step.")
+    wavegan_disc_phaseshuffle = models.IntegerField(default=2,help_text="How much phaseshuffle is applied to the discriminator to prevent it using phase discrepancies to reject the generator.")
+    wavegan_disc_wgangp_beta1 = models.FloatField(default=0.5,help_text="Adam optimizer beta1 for discriminator.")
+    wavegan_disc_wgangp_beta2 = models.FloatField(default=0.9,help_text="Adam optimizer beta2 for discriminator.")
+    wavegan_disc_wgangp_learn = models.FloatField(default=0.0001,help_text="Initial learning rate for discriminator.")
+    wavegan_genr_pp = models.BooleanField(default=False,help_text="Does the generator also learn a noise filter?")
+    wavegan_genr_pp_len = models.IntegerField(default=512,help_text="Width of the generator noise filter in samples.")
     wavegan_genr_upsample = models.CharField(max_length=32,blank=False,choices=[('zeros','zeros'),
-                                                                                ('nn','nn')]
-                                            )
-    wavegan_genr_wgangp_beta1 = models.FloatField(default=0.5)
-    wavegan_genr_wgangp_beta2 = models.FloatField(default=0.9)
-    wavegan_genr_wgangp_learn = models.FloatField(default=0.0001)
-    wavegan_kernel_len = models.IntegerField(default=25)
-    wavegan_latent_dim = models.IntegerField(default=64)
+                                                                                ('nn','nn')],
+                                            help_text="Upsampling strategy used by the generator. Zeros is usually best."
+    )
+    wavegan_genr_wgangp_beta1 = models.FloatField(default=0.5,help_text="Adam optimizer beta1 for discriminator.")
+    wavegan_genr_wgangp_beta2 = models.FloatField(default=0.9,help_text="Adam optimizer beta2 for discriminator.")
+    wavegan_genr_wgangp_learn = models.FloatField(default=0.0001,help_text="Initial learning rate for discriminator.")
+    wavegan_kernel_len = models.IntegerField(default=25,help_text="The size of the convolution window, in samples,  used by the model. Bigger may mean greater awareness of features expressed over greater time intervals.")
+    wavegan_latent_dim = models.IntegerField(default=64,help_text="Latent space dimensionality. The number of dimensions to the 'space' used to map the domain of generatable sounds. Best kept the same as wavegan_dim")
 
     def __str__(self):
         return str(self.model)+' : '+self.name
@@ -104,7 +105,7 @@ class modelSnapshot(models.Model):
     g_loss_svg = models.TextField(default="")
     global_step_svg = models.TextField(default="")
     #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
-    path = models.CharField(max_length=512,blank=False,unique=True)
+    path = models.CharField(max_length=255,blank=False,unique=True)
 
     def __str__(self):
         return str(self.modelRun)+' : '+str(self.checkpoint)
