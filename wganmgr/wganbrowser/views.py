@@ -144,7 +144,7 @@ def modelrun_delete(request,modelrun_id):
 def modelrun_request(request,modelrun_id):
     modelrun = modelRun.objects.get(pk=modelrun_id)
     modelrun_request_form = modelRunRequestForm(initial={'modelrun_id':modelrun.id})
-    context={'form':modelrun_request_form}
+    context={'form':modelrun_request_form,'modelrun':modelrun}
     return render(request,'wganbrowser/modelrun/modelrun_request.html',context)
 
 @login_required

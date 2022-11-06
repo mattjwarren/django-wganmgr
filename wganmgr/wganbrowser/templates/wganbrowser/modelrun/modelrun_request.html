@@ -1,6 +1,6 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Generate Model Run Request.
+    Generate Model Run Request for {{ modelrun.name }}.
     <form action="{% url 'wganbrowser:modelrun_post' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}

@@ -30,7 +30,7 @@ class modelRunRequestForm(forms.Form):
                      at least 'Upload Interval' checkpoints from the last
                      published snapshot, a new snapshot will be published.
                      When the upload interval type is SECONDS, a new
-                     snapshot will be generated every SECONDS.
+                     snapshot will be generated every 'Upload Interval' seconds.
                      Checkpoints are generated every ModelRun.train_save_secs
                      seconds.""")
     model_upload_interval_type = forms.ChoiceField(initial='CHECKPOINT',
