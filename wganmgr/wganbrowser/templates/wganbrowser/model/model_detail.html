@@ -1,22 +1,21 @@
 {% if model %}
-    Model {{ model.name }}
+    Model: {{ model.name }}
     <ul>
-        <li>batch size: {{ model.train_batch_size }}</li>
-        <li>dim: {{ model.wavegan_dim }}</li>
-        <li>latent dim: {{ model.wavegan_latent_dim }}</li>
-        <li>sample size: {{ model.data_slice_len }}</li>
+        <li>Library: {{ model.library.name }}</li>
+        <li>Dataset: {{ model.dataset.name }}</li>
     </ul>
     </hr>
-    Runs for {{ model.name }}
-    <ul>
-        {% for run,snapshot in runs_with_snapshot.items %}
-            <li><a href="/wganbrowser/modelrun_detail/{{run.id}}/">{{ run.name }}</a>
-                 : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshot available. {% endif %}</li>
-        {% endfor %}
-    </ul>
-
-
-
+    {% if runs_with_snapshot.items %}
+        Runs for {{ model.name }}
+        <ul>
+            {% for run,snapshot in runs_with_snapshot.items %}
+                <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>
+                    : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshot available. {% endif %}</li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        No runs found.
+    {% endif %}
 {% else %}
     <p>Model {{ model_id }} not found.</p>
 {% endif %}

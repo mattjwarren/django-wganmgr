@@ -5,6 +5,7 @@ from django.http import HttpResponse
 from django.template import loader
 
 from .models import *
+from .forms import *
 
 def index(request):
     return HttpResponse("Hello, world. You're at the wgan browser index.")
@@ -28,6 +29,25 @@ def model_detail(request,model_id):
         'runs_with_snapshot':runs_with_snapshot,
     }
     return render(request,'wganbrowser/model/model_detail.html',context)
+
+def model_create(request):
+    form = modelForm()
+    context = {'form':form} 
+    return render(request,'wganbrowser/model/model_create.html',context)
+
+def model_save(request):
+    if request.method=='POST':
+        form=modelForm(request.POST)
+        if form.is_valid():
+            data=form.cleaned_data
+            new_model=model(name=data['name'],
+                            library=data['library'],
+                            dataset=data['dataset'])
+            new_model.save()
+            return model_detail(request,new_model.id)
+    else:
+        return model_create(request)
+
 
 def dataset_detail(request,dataset_id):
     return HttpResponse("Looking at details for dataset</br> %s" % str(get_object_or_404(dataset,pk=dataset_id)))
