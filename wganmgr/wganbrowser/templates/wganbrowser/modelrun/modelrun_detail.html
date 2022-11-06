@@ -87,6 +87,7 @@
 {% endblock %}
 {% block content_menu %}
     <hr></hr>
-    <a href="{% url 'wganbrowser:modelrun_delete' modelrun.id %}">Delete Everything!</a>
+    <a href="{% url 'wganbrowser:modelrun_delete' modelrun.id %}">Delete Everything!</a> | 
+    <a href="{% url 'wganbrowser:modelrun_request' modelrun.id %}">Request</a>
     <hr></hr>
 {% endblock %}

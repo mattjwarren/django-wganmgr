@@ -1,0 +1,9 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    Generate Model Run Request.
+    <form action="{% url 'wganbrowser:modelrun_post' %}" method="post">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

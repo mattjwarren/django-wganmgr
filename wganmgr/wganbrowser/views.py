@@ -1,5 +1,6 @@
 from django.shortcuts import render, get_object_or_404
 from django.contrib.auth.decorators import login_required
+from api4jenkins import Jenkins
 
 # Create your views here.
 from django.http import HttpResponse
@@ -138,6 +139,43 @@ def modelrun_delete(request,modelrun_id):
     if modelrun:
         modelrun.delete()
     return modelruns(request)
+
+@login_required
+def modelrun_request(request,modelrun_id):
+    modelrun = modelRun.objects.get(pk=modelrun_id)
+    modelrun_request_form = modelRunRequestForm(initial={'modelrun_id':modelrun.id})
+    context={'form':modelrun_request_form}
+    return render(request,'wganbrowser/modelrun/modelrun_request.html',context)
+
+@login_required
+def modelrun_post(request):
+    if request.method=='POST':
+        form=modelRunRequestForm(request.POST)
+        if form.is_valid():
+            data=form.cleaned_data
+            modelrun = modelRun.objects.get(pk=data['modelrun_id'])
+            jc=Jenkins('http://192.168.1.220:8080/',auth=('matt','matt'))
+            #
+            # TODO: all sorts of checking nothing is running
+            # generating new run parameters
+            # wondering about overriding args.txt parameters etc..
+            #
+            build_job=jc.build_job("wgan-train-and-upload",
+                                    WAVEGAN_REPO_ROOT="/home/matt/dev/git_repos/wavegan",
+                                    UPLOAD_INTERVAL=data['upload_interval'],
+                                    MODEL_UPLOAD_INTERVAL_TYPE=data['model_upload_interval_type'],
+                                    TENSORBOARD_REFRESH_INTERVAL=data['tensorboard_refresh_interval'],
+                                    BOARD_REFRESH_INTERVAL_TYPE=data['board_refresh_interval_type'],
+                                    RUNS_ROOT=modelrun.model.library.path,
+                                    MODEL=modelrun.path,
+                                    PYTHON_VENV_ACTIVATE='source ~/dev/venvs/tf/bin/activate',
+                                    WGANMGR_REQUEST=True)
+            prin("SENT JENKINS REQUEST")
+            return modelruns(request)
+    else:
+        print("FAILED VALIDATION")
+        return modelruns(request)
+
 
 @login_required
 def modelsnapshot_detail(request,modelsnapshot_id):
