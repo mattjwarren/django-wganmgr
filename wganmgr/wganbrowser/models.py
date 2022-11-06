@@ -4,7 +4,7 @@ from os import path
 # Create your models here.
 class library(models.Model):
     name = models.CharField(max_length=64,blank=False,unique=True)
-    path = models.CharField(max_length=255,blank=False,unique=True)
+    path = models.CharField(max_length=255,blank=False,unique=True,help_text="Full filesystem path to library dir.")
 
     def __str__(self):
         return self.name+'@'+self.path
@@ -18,11 +18,11 @@ class library(models.Model):
         return cls.objects.get(name=name)
 
 class dataset(models.Model):
-    path = models.CharField(max_length=512,blank=False)
+    path = models.CharField(max_length=512,blank=False,help_text="Full filesystem path to dataset dir.")
     name = models.CharField(max_length=255,blank=False,unique=True)
-    data_normalize = models.BooleanField(default=False)
-    data_num_channels = models.IntegerField(default=1)
-    data_fast_wav = models.BooleanField(default=True)
+    data_normalize = models.BooleanField(default=False,help_text="Normalize all the audio files before training?")
+    data_num_channels = models.IntegerField(default=1,help_text="Channels in the audio data.")
+    data_fast_wav = models.BooleanField(default=True,help_text="Use fast wav loading.")
     
     def __str__(self):
         return self.name
@@ -42,9 +42,9 @@ class model(models.Model):
     mode = models.CharField(max_length=32,blank=False,default='train',choices=[('train','train'),
                                                                ('preview','preview'),
                                                                ('incept','incept'),
-                                                               ('infer','infer')]
-                            ) 
-    preview_n = models.IntegerField(default=3)
+                                                               ('infer','infer')],
+                            help_text="Run mode for model. Only train is available for now, so choose train!.") 
+    preview_n = models.IntegerField(default=3,help_text="Number of audio sample previews to generate for tensorboard.")
 
     def __str__(self):
         return str(self.library)+' : '+self.name
