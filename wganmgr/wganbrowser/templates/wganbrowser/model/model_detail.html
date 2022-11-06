@@ -3,8 +3,8 @@
     {% if model %}
         Model: {{ model.name }}
         <ul>
-            <li>Library: {{ model.library.name }}</li>
-            <li>Dataset: {{ model.dataset.name }}</li>
+            <li>Library: <a href="{% url 'wganbrowser:library_detail' model.library.id %}">{{ model.library.name }}</a></li>
+            <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' model.dataset.id %}">{{ model.dataset.name }}</a></li>
         </ul>
         </hr>
         {% if runs_with_snapshot.items %}
@@ -12,7 +12,11 @@
             <ul>
                 {% for run,snapshot in runs_with_snapshot.items %}
                     <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>
-                        : {% if snapshot %} {{ snapshot.checkpoint }} {% else %} No snapshots found. {% endif %}</li>
+                        : {% if snapshot %}
+                            <a href="{% url 'wganbrowser:modelsnapshot_detail' snapshot.id %}">{{ snapshot.checkpoint }}</a>
+                          {% else %}
+                            No snapshots found.
+                          {% endif %}</li>
                 {% endfor %}
             </ul>
         {% else %}
@@ -25,7 +29,7 @@
 {% block content_menu %}
     <hr></hr>
     <a href="{% url 'wganbrowser:model_delete' model.id %}">Delete Everything!</a> | 
-    <a href="{% url 'wganbrowser:model_create' %}">Create</a>
+    <a href="{% url 'wganbrowser:modelrun_create' %}">Create Run</a>
     <hr></hr>
 {% endblock %}
 

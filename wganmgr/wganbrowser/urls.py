@@ -17,8 +17,16 @@ urlpatterns = [
     path('model_delete/<int:model_id>/',views.model_delete,name='model_delete'),
     #/wganbrowser/dataset_detail/{dataset_id}/
     path('dataset_detail/<int:dataset_id>/',views.dataset_detail,name='dataset_detail'),
-    #/wganbrowser/modelrun_detail/{modelrun_id}/
+    #/wganbrowser/modelruns/
+    path('modelruns/',views.modelruns,name='modelruns'),
+    #/wganbrowser/modelrun_details/{modelrun_id}
     path('modelrun_detail/<int:modelrun_id>/',views.modelrun_detail,name='modelrun_detail'),
+    #/wganbrowser/modelrun_create/
+    path('modelrun_create/',views.modelrun_create,name='modelrun_create'),
+    #/wganbrwoser/model_save/
+    path('modelrun_save/',views.modelrun_save,name='modelrun_save'),
+    #/wganbrwoser/modelrun_delete/
+    path('modelrun_delete/<int:model_id>/',views.modelrun_delete,name='modelrun_delete'),
     #/wganbrowser/modelsnapshot_detail/{modelsnapshot_id}/
     path('modelsnapshot_detail/<int:modelsnapshot_id>/',views.modelsnapshot_detail,name='modelsnapshot_detail'),
     #/wganbrowser/library_detail/{library_id}/

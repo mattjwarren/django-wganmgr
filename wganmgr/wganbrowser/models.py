@@ -58,7 +58,7 @@ class model(models.Model):
 
 class modelRun(models.Model):
     model = models.ForeignKey(model,blank=False,on_delete=models.CASCADE)
-    path = models.CharField(max_length=512,blank=False)
+    path = models.CharField(max_length=512,blank=False,unique=True)
     name = models.CharField(max_length=255,blank=False,unique=True)
     train_batch_size = models.IntegerField(default=32)
     train_save_secs = models.IntegerField(default=3600)
@@ -103,10 +103,8 @@ class modelSnapshot(models.Model):
     d_loss_svg = models.TextField(default="")
     g_loss_svg = models.TextField(default="")
     global_step_svg = models.TextField(default="")
-
-#path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
-#
-    path = models.CharField(max_length=512,blank=False)
+    #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
+    path = models.CharField(max_length=512,blank=False,unique=True)
 
     def __str__(self):
         return str(self.modelRun)+' : '+str(self.checkpoint)

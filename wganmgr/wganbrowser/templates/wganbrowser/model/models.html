@@ -1,6 +1,6 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Models list..
+    Models..
     <ul>
     {% for model in models %}
         <li><a href="{% url 'wganbrowser:model_detail' model.id %}">{{ model.name }}</a></li>

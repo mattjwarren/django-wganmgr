@@ -1,0 +1,28 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    {% if modelrun %}
+        Model Run: {{ modelrun.name }}
+        <ul>
+            <li>Model: <a href="{% url 'wganbrowser:model_detail' modelrun.model.id %}">{{ modelrun.model.name }}</a></li>
+            <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' modelrun.model.dataset.id %}">{{ modelrun.model.dataset.name }}</a></li>
+        </ul>
+        </hr>
+        {% if modelsnapshots %}
+            Snapshots for {{ modelrun.name }}
+            <ul>
+                {% for modelsnapshot in modelsnapshots %}
+                    <li><a href="{% url 'wganbrowser:modelsnapshot_detail' modelsnapshot.id %}">{{ modelsnapshot.checkpoint }}</a></li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            No snapshots found.
+        {% endif %}
+    {% else %}
+        <p>Model {{ model_id }} not found.</p>
+    {% endif %}
+{% endblock %}
+{% block content_menu %}
+    <hr></hr>
+    <a href="{% url 'wganbrowser:modelrun_delete' modelrun.id %}">Delete Everything!</a>
+    <hr></hr>
+{% endblock %}

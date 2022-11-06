@@ -3,7 +3,8 @@
 <div id="navigation">
     {% block navigation %}
         <hr></hr>
-        <a href="{% url 'wganbrowser:models' %}">Models</a>
+        <a href="{% url 'wganbrowser:models' %}">Models</a> | 
+        <a href="{% url 'wganbrowser:modelruns' %}">Model Runs</a>
         <hr></hr>
     {% endblock %}
 </div>
