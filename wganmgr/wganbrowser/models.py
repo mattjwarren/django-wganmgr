@@ -81,9 +81,9 @@ class modelRun(models.Model):
                                                                                 ('nn','nn')],
                                             help_text="Upsampling strategy used by the generator. Zeros is usually best."
     )
-    wavegan_genr_wgangp_beta1 = models.FloatField(default=0.5,help_text="Adam optimizer beta1 for discriminator.")
-    wavegan_genr_wgangp_beta2 = models.FloatField(default=0.9,help_text="Adam optimizer beta2 for discriminator.")
-    wavegan_genr_wgangp_learn = models.FloatField(default=0.0001,help_text="Initial learning rate for discriminator.")
+    wavegan_genr_wgangp_beta1 = models.FloatField(default=0.5,help_text="Adam optimizer beta1 for generator.")
+    wavegan_genr_wgangp_beta2 = models.FloatField(default=0.9,help_text="Adam optimizer beta2 for generator.")
+    wavegan_genr_wgangp_learn = models.FloatField(default=0.0001,help_text="Initial learning rate for generator.")
     wavegan_kernel_len = models.IntegerField(default=25,help_text="The size of the convolution window, in samples,  used by the model. Bigger may mean greater awareness of features expressed over greater time intervals.")
     wavegan_latent_dim = models.IntegerField(default=64,help_text="Latent space dimensionality. The number of dimensions to the 'space' used to map the domain of generatable sounds. Best kept the same as wavegan_dim")
 
