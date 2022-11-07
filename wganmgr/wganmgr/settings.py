@@ -136,3 +136,14 @@ LOGIN_REDIRECT_URL = '/wganbrowser/models'
 
 # email needs setting up, in the meantime emails go to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+
+#wganbrowser specific
+JENKINS_URL='http://matt-desktop.local:8080/'
+JENKINS_USER='matt'
+JENKINS_PWD='matt'
+JENKINS_WAVEGAN_REPO_ROOT='/home/matt/dev/git_repos/wavegan'
+JENKINS_PYENV_ACTIVATE='source ~/dev/venvs/tf/bin/activate'
+JENKINS_TRAIN_JOB="wgan-train-and-upload"
+MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'

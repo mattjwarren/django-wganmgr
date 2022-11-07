@@ -11,7 +11,7 @@ class modelForm(ModelForm):
 class modelRunForm(ModelForm):
     class Meta:
         model = modelRun
-        fields = ['name','model','path','train_batch_size',
+        fields = ['name','model','path','comments','train_batch_size',
                   'train_save_secs','train_summary_secs',
                   'wavegan_batchnorm','data_sample_rate',
                   'data_slice_len','data_first_slice','data_pad_end',

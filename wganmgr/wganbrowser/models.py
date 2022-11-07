@@ -18,7 +18,7 @@ class library(models.Model):
         return cls.objects.get(name=name)
 
 class dataset(models.Model):
-    path = models.CharField(max_length=512,blank=False,help_text="Full filesystem path to dataset dir.")
+    data_dir = models.CharField(max_length=512,blank=False,help_text="Full filesystem path to dataset dir.")
     name = models.CharField(max_length=255,blank=False,unique=True)
     data_normalize = models.BooleanField(default=False,help_text="Normalize all the audio files before training?")
     data_num_channels = models.IntegerField(default=1,help_text="Channels in the audio data.")
@@ -59,6 +59,7 @@ class modelRun(models.Model):
     model = models.ForeignKey(model,blank=False,on_delete=models.CASCADE)
     path = models.CharField(max_length=255,blank=False,unique=True,help_text="The filesystem path relative to the model library root that will store this run")
     name = models.CharField(max_length=255,blank=False,unique=True)
+    comments = models.TextField(max_length=1024,default="...")
     train_batch_size = models.IntegerField(default=32,help_text="Training batch size. Smaller trains faster, but learning is more erratic. Powers of 2.")
     train_save_secs = models.IntegerField(default=3600,help_text="How often a model checkpoint is created. This is not how often a snapshot is created.")
     train_summary_secs = models.IntegerField(default=180,help_text="How often an event summary is written. This is not how often the tensorboard view is refreshed")

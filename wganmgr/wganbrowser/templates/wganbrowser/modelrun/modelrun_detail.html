@@ -7,6 +7,8 @@
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' modelrun.model.dataset.id %}">{{ modelrun.model.dataset.name }}</a></li>
             <li>Path: {{ modelrun.path }}</li>
         </ul>
+        Comments:
+        <p>{{ modelrun.comments }}</p>
         <hr></hr>
         {% if modelsnapshots %}
             Snapshots for {{ modelrun.name }}
