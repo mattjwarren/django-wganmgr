@@ -14,7 +14,8 @@ from wganbrowser.strings import *
 
 from time import sleep
 
-from .jobs import jobs
+#from jobs import jobs
+from wganbrowser.views import job
 
 from .package_global import *
 
@@ -125,7 +126,7 @@ def post(request):
                 MODELRUN_ID=modelrun.id
             )
             sleep(10)
-            return jobs(request)
+            return job.jobs(request)
         else:
             #TODO: render bad form message and go to modelrun_request
             return modelruns(request)

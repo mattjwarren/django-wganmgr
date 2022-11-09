@@ -106,7 +106,9 @@ class modelSnapshot(models.Model):
     g_loss_svg = models.TextField(default="")
     global_step_svg = models.TextField(default="")
     #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
-    path = models.CharField(max_length=255,blank=False,unique=True)
+    path = models.CharField(max_length=255,blank=True,unique=True)
+    creation_time = models.DateTimeField(auto_now_add=True)
+
 
     def __str__(self):
         return str(self.modelRun)+' : '+str(self.checkpoint)
