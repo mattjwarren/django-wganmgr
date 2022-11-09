@@ -9,12 +9,11 @@ from django.template import loader
 
 from wganbrowser.models import *
 from wganbrowser.forms import *
-from wganbrowser.jenkins_api import *
 from wganbrowser.strings import *
 
 from time import sleep
 
-#from . import *
+from .package_global import *
 
 @login_required
 def library_detail(request,library_id):

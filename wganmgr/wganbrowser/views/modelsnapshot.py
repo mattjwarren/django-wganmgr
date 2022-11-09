@@ -14,7 +14,8 @@ from wganbrowser.strings import *
 
 from time import sleep
 
-#from . import *
+from .package_global import *
+
 
 @login_required
 def modelsnapshot_detail(request,modelsnapshot_id):

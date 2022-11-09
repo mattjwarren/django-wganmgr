@@ -14,7 +14,7 @@ from wganbrowser.strings import *
 
 from time import sleep
 
-#from . import *
+from .package_global import *
 
 def index(request):
     return models(request)
