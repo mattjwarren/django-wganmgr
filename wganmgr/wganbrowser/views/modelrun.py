@@ -14,6 +14,8 @@ from wganbrowser.strings import *
 
 from time import sleep
 
+from .jobs import jobs
+
 from .package_global import *
 
 @login_required
