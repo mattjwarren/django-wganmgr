@@ -108,6 +108,7 @@ class modelSnapshot(models.Model):
     #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
     path = models.CharField(max_length=255,blank=True,unique=True)
     creation_time = models.DateTimeField(auto_now_add=True)
+    size_gb = models.IntegerField(default=0)
 
 
     def __str__(self):

@@ -15,6 +15,8 @@ from time import sleep
 
 from .package_global import *
 
+
+
 @login_required
 def jobs(request):
     basic_jobs=jenkins.running_builds()

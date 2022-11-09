@@ -1,5 +1,6 @@
 from django.conf import settings
 from wganbrowser.jenkins_api import *
+from wganbrowser.models import *
 
 jenkins=jenkins_helper(settings.JENKINS_URL,auth=(settings.JENKINS_USER,settings.JENKINS_PWD))
 
@@ -56,3 +57,8 @@ def build_run_command_args_from_modelrun(modelrun):
     run_command_args+=iterate_record_for_run_command_args(modelrun.model)
     run_command_args+=iterate_record_for_run_command_args(modelrun.model.dataset)
     return run_command_args
+
+def fs_get_latest_ckpt_info(modelRun):
+    #gets latest checkpoint number and time from modelRun
+    #on training host
+    pass    

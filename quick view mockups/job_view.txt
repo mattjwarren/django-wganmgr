@@ -1,0 +1,22 @@
+           BANNER
+-----------------------------
+nav1 | nav2 | etc..
+-----------------------------
+         ~ message ~
+-----------------------------
+
+Running jobs:
+
+Model Run Name:
+	* Last training checkpoint 12345 at date/time
+		- generating every modelrun train_summary_secs
+		- timedelta until next checkpoint
+	* Last snapshot checkpoint <31234> at date/time
+		- generating every checkpoint delta X
+		- Current delta X of Y
+				or
+		- generating every X seconds when new checkpoint
+		- Y seconds until next snapshot check
+
+-----------------------------
+action1 | action1 | etc..

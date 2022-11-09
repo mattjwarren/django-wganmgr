@@ -14,6 +14,6 @@ class jenkins_helper():
     def running_builds(self):
         return [ (b,b.get_parameters()) for b in self.client.nodes.iter_builds() ]
 
-
+    
 
 

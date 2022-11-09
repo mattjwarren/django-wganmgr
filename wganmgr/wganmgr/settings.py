@@ -143,8 +143,31 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 JENKINS_URL='http://matt-desktop.local:8080/'
 JENKINS_USER='matt'
 JENKINS_PWD='matt'
+
+JENKINS_TRAIN_JOB="wgan-train-and-upload"
 JENKINS_WAVEGAN_REPO_ROOT='/home/matt/dev/git_repos/wavegan'
 JENKINS_PYENV_ACTIVATE='source ~/dev/venvs/tf/bin/activate'
-JENKINS_TRAIN_JOB="wgan-train-and-upload"
-MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'
+
 JENKINS_TRAINING_NODES=['ubuntu-wavegan-2222']
+JENKINS_PASSTHROUGH_JOB='wganmgr-shell-passthrough'
+
+JENKINS_DB_HOST_SSH_CREDENTIALS_ID='' #if empty, jenkins will rely on node user ssh .conif & pwdless access setup
+                                      #otherwise ssh keypair credentials
+JENKINS_DB_HOST_SQL_CREDENTIALS_ID='' #mysql username, password credentials
+JENKINS_DB_HOST_SQL_DB_NAME='django_wganmgr' #mysql DB name
+JENKINS_DB_HOST_ADDRESS='ubuntu-1' #192.168.1.199
+
+JENKINS_STORAGE_HOST_SSH_CREDENTIALS_ID='' #if empty, jenkins will rely on node user ssh .conif & pwdless access setup
+                                           #otherwise ssh keypair credentials
+JENKINS_STORAGE_HOST_ADDRESS='ubuntu-1' #192.168.1.199
+JENKINS_STORAGE_HOST_STORAGE_ROOT='/home/matt/incoming_models'
+
+JENKINS_APP_HOST_SSH_CREDENTIALS_ID='' #if empty, jenkins will rely on node user ssh .conif & pwdless access setup
+                                       #otherwise ssh keypair credentials
+JENKINS_APP_HOST_ADDRESS='ubuntu-1'
+
+#construct model url from model path name
+MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'
+
+#how we exec shell commands on the training node
+TRAINING_HOST_EXECUTION_MODE='JENKINS_PASSTHROUGH' #or SSH
