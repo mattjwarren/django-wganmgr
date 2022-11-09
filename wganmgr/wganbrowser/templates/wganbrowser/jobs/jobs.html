@@ -1,0 +1,13 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    Executing model runs..
+    {% if jobs %}
+        <ul>
+            {% for modelrun in jobs %}
+                <li> {{ modelrun.name }} </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p>No model runs are executing.</p>
+    {% endif %}
+{% endblock %}

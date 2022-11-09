@@ -1,0 +1,7 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    Model snapshot {{ modelsnapshot.checkpoint }}<br>
+    {{ modelsnapshot.d_loss_svg | safe }}<br>
+    {{ modelsnapshot.g_loss_svg | safe }}<br>
+    {{ modelsnapshot.global_step_svg | safe }}<br>
+{% endblock %}

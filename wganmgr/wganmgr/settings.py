@@ -147,3 +147,4 @@ JENKINS_WAVEGAN_REPO_ROOT='/home/matt/dev/git_repos/wavegan'
 JENKINS_PYENV_ACTIVATE='source ~/dev/venvs/tf/bin/activate'
 JENKINS_TRAIN_JOB="wgan-train-and-upload"
 MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'
+JENKINS_TRAINING_NODES=['ubuntu-wavegan-2222']
