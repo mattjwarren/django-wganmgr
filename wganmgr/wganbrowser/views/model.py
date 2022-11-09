@@ -26,7 +26,7 @@ def models(request):
     return render(request,'wganbrowser/model/models.html',context)
 
 @login_required
-def model_detail(request,model_id):
+def detail(request,model_id):
     selected_model = model.objects.get(pk=model_id)
     runs = modelRun.objects.filter(model=selected_model)
 
