@@ -25,7 +25,7 @@ def modelruns(request):
     return render(request,'wganbrowser/modelrun/modelruns.html',context)
 
 @login_required
-def modelrun_detail(request,modelrun_id):
+def detail(request,modelrun_id):
     modelrun = modelRun.objects.get(pk=modelrun_id)
     modelsnapshots = modelSnapshot.objects.filter(modelRun=modelrun)
 
@@ -35,16 +35,16 @@ def modelrun_detail(request,modelrun_id):
         'modelsnapshots':modelsnapshots,
     }
 
-    return render(request,'wganbrowser/modelrun/modelrun_detail.html',context)
+    return render(request,'wganbrowser/modelrun/detail.html',context)
 
 @login_required
-def modelrun_create(request):
+def create(request):
     form = modelRunForm()
     context = {'form':form} 
-    return render(request,'wganbrowser/modelrun/modelrun_create.html',context)
+    return render(request,'wganbrowser/modelrun/create.html',context)
 
 @login_required
-def modelrun_save(request):
+def save(request):
     if request.method=='POST':
         form=modelRunForm(request.POST)
         if form.is_valid():
@@ -80,24 +80,24 @@ def modelrun_save(request):
             new_modelrun.save()
             return modelruns(request)
     else:
-        return modelrun_create(request)
+        return create(request)
 
 @login_required
-def modelrun_delete(request,modelrun_id):
+def delete(request,modelrun_id):
     modelrun = modelRun.objects.get(pk=modelrun_id)
     if modelrun:
         modelrun.delete()
     return modelruns(request)
 
 @login_required
-def modelrun_request(request,modelrun_id):
+def request(request,modelrun_id):
     modelrun = modelRun.objects.get(pk=modelrun_id)
-    modelrun_request_form = modelRunRequestForm(initial={'modelrun_id':modelrun.id})
-    context={'form':modelrun_request_form,'modelrun':modelrun}
-    return render(request,'wganbrowser/modelrun/modelrun_request.html',context)
+    request_form = modelRunRequestForm(initial={'modelrun_id':modelrun.id})
+    context={'form':request_form,'modelrun':modelrun}
+    return render(request,'wganbrowser/modelrun/request.html',context)
 
 @login_required
-def modelrun_post(request):
+def post(request):
     if request.method=='POST':
         form=modelRunRequestForm(request.POST)
         if form.is_valid():
@@ -107,7 +107,7 @@ def modelrun_post(request):
             if jenkins.is_running(settings.JENKINS_TRAIN_JOB):
                 context={'form':form,'modelrun':modelrun,
                         'message':MODELRUN_POST_ALREADY_RUNNING}
-                return render(request,'wganbrowser/modelrun/modelrun_request.html',context)
+                return render(request,'wganbrowser/modelrun/request.html',context)
 
             run_command_args=build_run_command_args_from_modelrun(modelrun)
             queue_item=jenkins.client.build_job(

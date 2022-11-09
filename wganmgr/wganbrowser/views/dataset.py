@@ -17,5 +17,5 @@ from time import sleep
 from .package_global import *
 
 @login_required
-def dataset_detail(request,dataset_id):
+def detail(request,dataset_id):
     return HttpResponse("Looking at details for dataset</br> %s" % str(get_object_or_404(dataset,pk=dataset_id)))

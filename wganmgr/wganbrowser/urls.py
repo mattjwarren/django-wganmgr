@@ -8,32 +8,32 @@ urlpatterns = [
     path('', views.model.index, name='index'),
     #/wganbrowser/models/
     path('models/',views.model.models,name='models'),
-    #/wganbrowser/model_detail/{model_id}/
-    path('model_detail/<int:model_id>/',views.model.detail,name='model_detail'),
-    #/wganbrwoser/model_create/
-    path('model_create/',views.model.model_create,name='model_create'),
-    #/wganbrwoser/model_save/
-    path('model_save/',views.model.model_save,name='model_save'),
-    #/wganbrwoser/model_delete/
-    path('model_delete/<int:model_id>/',views.model.model_delete,name='model_delete'),
+    #/wganbrowser/model/detail/{model_id}/
+    path('model/detail/<int:model_id>/',views.model.detail,name='model_detail'),
+    #/wganbrwoser/model/create/
+    path('model/create/',views.model.create,name='model_create'),
+    #/wganbrwoser/model/save/
+    path('model/save/',views.model.save,name='model_save'),
+    #/wganbrwoser/model/delete/
+    path('model/delete/<int:model_id>/',views.model.delete,name='model_delete'),
 
-    #/wganbrowser/dataset_detail/{dataset_id}/
-    path('dataset_detail/<int:dataset_id>/',views.dataset.dataset_detail,name='dataset_detail'),
+    #/wganbrowser/dataset/detail/{dataset_id}/
+    path('dataset/detail/<int:dataset_id>/',views.dataset.detail,name='dataset_detail'),
 
     #/wganbrowser/modelruns/
     path('modelruns/',views.modelrun.modelruns,name='modelruns'),
-    #/wganbrowser/modelrun_details/{modelrun_id}
-    path('modelrun_detail/<int:modelrun_id>/',views.modelrun.modelrun_detail,name='modelrun_detail'),
-    #/wganbrowser/modelrun_create/
-    path('modelrun_create/',views.modelrun.modelrun_create,name='modelrun_create'),
-    #/wganbrwoser/model_save/
-    path('modelrun_save/',views.modelrun.modelrun_save,name='modelrun_save'),
-    #/wganbrwoser/modelrun_delete/
-    path('modelrun_delete/<int:modelrun_id>/',views.modelrun.modelrun_delete,name='modelrun_delete'),
-    #/wganbrowser/modelrun_request/{modelrun_id}
-    path('modelrun_request/<int:modelrun_id>/',views.modelrun.modelrun_request,name='modelrun_request'),
-    #/wganbrowser/modelrun_post/
-    path('modelrun_post/',views.modelrun.modelrun_post,name='modelrun_post'),
+    #/wganbrowser/modelrun/detail/{modelrun_id}
+    path('modelrun/detail/<int:modelrun_id>/',views.modelrun.detail,name='modelrun_detail'),
+    #/wganbrowser/modelrun/create/
+    path('modelrun/create/',views.modelrun.create,name='modelrun_create'),
+    #/wganbrwoser/modelrun/save/
+    path('modelrun/save/',views.modelrun.save,name='modelrun_save'),
+    #/wganbrwoser/modelrun/delete/{modelrun_id}
+    path('modelrun/delete/<int:modelrun_id>/',views.modelrun.delete,name='modelrun_delete'),
+    #/wganbrowser/modelrun/request/{modelrun_id}
+    path('modelrun/request/<int:modelrun_id>/',views.modelrun.request,name='modelrun_request'),
+    #/wganbrowser/modelrun/post/
+    path('modelrun/post/',views.modelrun.post,name='modelrun_post'),
 
     #/wganbrowser/jobs/
     path('jobs/',views.jobs.jobs,name='jobs'),

@@ -44,16 +44,16 @@ def detail(request,model_id):
         'runs_with_snapshot':runs_with_snapshot,
     }
 
-    return render(request,'wganbrowser/model/model_detail.html',context)
+    return render(request,'wganbrowser/model/detail.html',context)
 
 @login_required
-def model_create(request):
+def create(request):
     form = modelForm()
     context = {'form':form} 
-    return render(request,'wganbrowser/model/model_create.html',context)
+    return render(request,'wganbrowser/model/create.html',context)
 
 @login_required
-def model_save(request):
+def save(request):
     if request.method=='POST':
         form=modelForm(request.POST)
         if form.is_valid():
@@ -64,10 +64,10 @@ def model_save(request):
             new_model.save()
             return models(request)
     else:
-        return model_create(request)
+        return create(request)
 
 @login_required
-def model_delete(request,model_id):
+def delete(request,model_id):
     selected_model = model.objects.get(pk=model_id)
     if selected_model:
         selected_model.delete()
