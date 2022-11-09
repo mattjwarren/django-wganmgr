@@ -14,7 +14,7 @@ from wganbrowser.strings import *
 
 from time import sleep
 
-from . import *
+#from . import *
 
 @login_required
 def dataset_detail(request,dataset_id):

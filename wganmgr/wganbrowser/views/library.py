@@ -14,7 +14,7 @@ from wganbrowser.strings import *
 
 from time import sleep
 
-from . import *
+#from . import *
 
 @login_required
 def library_detail(request,library_id):
