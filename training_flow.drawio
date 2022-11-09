@@ -1,0 +1,73 @@
+<mxfile host="65bd71144e">
+    <diagram id="GpXLcXaejVu4KIpRv8NL" name="Page-1">
+        <mxGraphModel dx="1251" dy="3050" grid="1" gridSize="10" guides="1" tooltips="1" connect="1" arrows="1" fold="1" page="1" pageScale="1" pageWidth="827" pageHeight="1169" math="0" shadow="0">
+            <root>
+                <mxCell id="0"/>
+                <mxCell id="1" parent="0"/>
+                <mxCell id="3" value="Training Output&lt;br&gt;..&lt;br&gt;..&lt;br&gt;T:100-ckpt-1234&lt;br&gt;T:100-sumry&lt;br&gt;T:150-sumry&lt;br&gt;T:200-sumry&lt;br&gt;T:250-sumry&lt;br&gt;T:300-sumry&lt;br&gt;T:350-sumry&lt;br&gt;T:400-sumry&lt;br&gt;T:450-sumry&lt;br&gt;T:500-ckpt-2600&lt;br&gt;T:500-sumry&lt;br&gt;T:550-sumry&lt;br&gt;T:600-sumry&lt;br&gt;T:650-sumry&lt;br&gt;T:700-sumry&lt;br&gt;T:750-sumry&lt;br&gt;T:800-sumry&lt;br&gt;T:850-sumry&lt;br&gt;T:900-ckpt-3400&lt;br&gt;T:900-sumry&lt;br&gt;T:950-sumry&lt;br&gt;..&lt;br&gt;.." style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="140" y="-2110" width="130" height="410" as="geometry"/>
+                </mxCell>
+                <mxCell id="4" value="Public Tensorboard Refresh" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="410" y="-1850" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="5" value="Downloadable Model Snapshot" style="rounded=0;whiteSpace=wrap;html=1;" vertex="1" parent="1">
+                    <mxGeometry x="410" y="-1980" width="120" height="60" as="geometry"/>
+                </mxCell>
+                <mxCell id="7" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;ModelRun&lt;/b&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;train_save_secs:400&lt;br style=&quot;font-size: 14px;&quot;&gt;train_summary_secs:50" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="110" y="-2180" width="190" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="8" value="&lt;b style=&quot;font-size: 14px;&quot;&gt;ModelRunRequest (Job)&lt;/b&gt;&lt;br style=&quot;font-size: 14px;&quot;&gt;Model Upload Interval:2000 (ckpts)&lt;br style=&quot;font-size: 14px;&quot;&gt;Board Refresh Interval:200 (scnds)" style="text;html=1;strokeColor=none;fillColor=none;align=center;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=14;" vertex="1" parent="1">
+                    <mxGeometry x="355" y="-2040" width="230" height="50" as="geometry"/>
+                </mxCell>
+                <mxCell id="9" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" source="3" target="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="360" y="-2070" as="sourcePoint"/>
+                        <mxPoint x="410" y="-2120" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="10" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="5">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="230" y="-1780" as="sourcePoint"/>
+                        <mxPoint x="400.03" y="-1680.1100000000001" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="12" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="234.97000000000003" y="-1969.8900000000003" as="sourcePoint"/>
+                        <mxPoint x="416" y="-1822" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="13" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="233.97000000000003" y="-1897.89" as="sourcePoint"/>
+                        <mxPoint x="409" y="-1808" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="14" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="232.97000000000003" y="-1840.89" as="sourcePoint"/>
+                        <mxPoint x="409" y="-1823" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="17" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="235" y="-2028" as="sourcePoint"/>
+                        <mxPoint x="412.53" y="-1858.11" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="18" value="" style="endArrow=classic;html=1;exitX=0.769;exitY=0.171;exitDx=0;exitDy=0;exitPerimeter=0;entryX=0;entryY=0.5;entryDx=0;entryDy=0;" edge="1" parent="1" target="4">
+                    <mxGeometry width="50" height="50" relative="1" as="geometry">
+                        <mxPoint x="234" y="-1769" as="sourcePoint"/>
+                        <mxPoint x="411.5" y="-1541" as="targetPoint"/>
+                    </mxGeometry>
+                </mxCell>
+                <mxCell id="19" value="We have more ckpt's than model snapshots for resiliency. in case of crashes we resume training from ckpt, but snapshotting every one uses too much space and to fine-grained detail&lt;br style=&quot;font-size: 18px;&quot;&gt;&lt;br style=&quot;font-size: 18px;&quot;&gt;We cant have ckpts too often for large models though, because it impacts training time" style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="-2320" width="370" height="200" as="geometry"/>
+                </mxCell>
+                <mxCell id="20" value="We update the tensorboard info slower than the training process, just because. No need to overdo it." style="text;html=1;strokeColor=none;fillColor=none;align=left;verticalAlign=middle;whiteSpace=wrap;rounded=0;fontSize=18;" vertex="1" parent="1">
+                    <mxGeometry x="390" y="-1750" width="370" height="60" as="geometry"/>
+                </mxCell>
+            </root>
+        </mxGraphModel>
+    </diagram>
+</mxfile>
