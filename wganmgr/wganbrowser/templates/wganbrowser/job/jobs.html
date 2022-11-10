@@ -2,9 +2,10 @@
 {% block content %}
     Executing model runs..
     {% if jobs %}
+    <br>Select to query node for job details.
         <ul>
-            {% for modelrun in jobs %}
-                <li> {{ modelrun.name }} </li>
+            {% for job in jobs %}
+                <li> <a href="{% url 'wganbrowser:job_detail' job.modelrun.id job.node_name %}"> {{ job.modelrun.name }} running on {{ job.node_name }}</li>
             {% endfor %}
         </ul>
     {% else %}

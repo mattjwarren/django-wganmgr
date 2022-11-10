@@ -87,6 +87,12 @@ class modelRun(models.Model):
     wavegan_kernel_len = models.IntegerField(default=25,help_text="The size of the convolution window, in samples,  used by the model. Bigger may mean greater awareness of features expressed over greater time intervals.")
     wavegan_latent_dim = models.IntegerField(default=64,help_text="Latent space dimensionality. The number of dimensions to the 'space' used to map the domain of generatable sounds. Best kept the same as wavegan_dim")
 
+
+    #TODO: when request modelRun, get to select which of the nodes vailable to run it on.
+    #in mutlinode environment, means we rstart on the specific node because data is there
+    #OR pull data over to new node from old node etc..
+    training_node_affinity=models.CharField(max_length=128,blank=True,default="")
+
     def __str__(self):
         return str(self.model)+' : '+self.name
 
@@ -111,6 +117,7 @@ class modelSnapshot(models.Model):
     size_gb = models.FloatField(default=0.0)
 
 
+
     def __str__(self):
         return str(self.modelRun)+' : '+str(self.checkpoint)
 
@@ -126,4 +133,4 @@ class modelSnapshot(models.Model):
 
 class x_message(models.Model):
     text=models.TextField(max_length=2048,default="")
-    token=models.CharField(max_length=32,blank=False,unique=True)
+    token=models.CharField(max_length=34,blank=False,unique=True)

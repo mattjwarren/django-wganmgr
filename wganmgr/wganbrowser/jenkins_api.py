@@ -1,6 +1,8 @@
+from django.conf import settings
+
+
 #https://pypi.org/project/api4jenkins/
 from api4jenkins import Jenkins
-
 
 class jenkins_helper():
 
@@ -12,7 +14,8 @@ class jenkins_helper():
         return job.building
 
     def running_builds(self):
-        return [ (b,b.get_parameters()) for b in self.client.nodes.iter_builds() ]
+        for node_name in settings.JENKINS_TRAINING_NODES:
+            return [ (b,b.get_parameters(),node_name) for b in self.client.nodes.get(node_name) if b.building ]
 
     
 
