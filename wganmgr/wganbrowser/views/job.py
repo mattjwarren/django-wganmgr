@@ -30,4 +30,4 @@ def jobs(request):
         else:
             message=JOBS_UNMANAGED_JOB_IS_RUNNING
     context={'jobs':jobs,'message':message}
-    return render(request,'wganbrowser/jobs/jobs.html',context)
+    return render(request,'wganbrowser/job/jobs.html',context)

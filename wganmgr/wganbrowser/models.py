@@ -107,8 +107,8 @@ class modelSnapshot(models.Model):
     global_step_svg = models.TextField(default="")
     #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
     path = models.CharField(max_length=255,blank=True,unique=True)
-    creation_time = models.DateTimeField(auto_now_add=True)
-    size_gb = models.IntegerField(default=0)
+    creation_time = models.DateTimeField(auto_now_add=True,blank=True)
+    size_gb = models.FloatField(default=0.0)
 
 
     def __str__(self):
@@ -123,3 +123,7 @@ class modelSnapshot(models.Model):
         return cls.objects.get(modelRun__name=name,checkpoint=checkpoint)
 
     #https://docs.djangoproject.com/en/4.1/intro/tutorial02/
+
+class x_message(models.Model):
+    text=models.TextField(max_length=2048,default="")
+    token=models.CharField(max_length=32,blank=False,unique=True)
