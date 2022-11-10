@@ -153,6 +153,7 @@ JENKINS_PASSTHROUGH_JOB='wganmgr-shell-passthrough'
 
 JENKINS_DB_HOST_SSH_CREDENTIALS_ID='' #if empty, jenkins will rely on node user ssh .conif & pwdless access setup
                                       #otherwise ssh keypair credentials
+JENKINS_DB_HOST_SSH_USERNAME='' #if empty will use jenkins node process username
 JENKINS_DB_HOST_SQL_CREDENTIALS_ID='' #mysql username, password credentials
 JENKINS_DB_HOST_SQL_DB_NAME='django_wganmgr' #mysql DB name
 JENKINS_DB_HOST_ADDRESS='ubuntu-1' #192.168.1.199
