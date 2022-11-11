@@ -1,14 +1,14 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Executing model runs..
+    Model run jobs in progress..
     {% if jobs %}
-    <br>Select to query node for job details.
+    <br>Select to query for job details.
         <ul>
             {% for job in jobs %}
                 <li> <a href="{% url 'wganbrowser:job_detail' job.modelrun.id job.node_name %}"> {{ job.modelrun.name }} </a> running on {{ job.node_name }}</li>
             {% endfor %}
         </ul>
     {% else %}
-        <p>No model runs are executing.</p>
+        <p>No model run jobs in progress.</p>
     {% endif %}
 {% endblock %}

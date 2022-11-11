@@ -43,9 +43,7 @@ def detail(request,modelrun_id,node_name):
     modelrun=modelRun.objects.get(pk=modelrun_id)
     modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
     query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun_path)
-    print(query_text)
     tokens=query_text.split()
-    print(tokens[5:7])
     date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
 
     dateobject=datetime.strptime(date_time_str,'%Y-%d-%m %H:%M:%S')
@@ -63,6 +61,10 @@ def detail(request,modelrun_id,node_name):
                 snapshot_interval_type=[ p.value for p in parms if p.name=='MODEL_UPLOAD_INTERVAL_TYPE' ][0]
                 snapshot_interval=int([ p.value for p in parms if p.name=='UPLOAD_INTERVAL' ][0])
 
+    if snapshot_interval_type=='CHECKPOINT':
+        snapshot_delta=int(latest_ckpt)-latest_snapshot.checkpoint
+    else:
+        snapshot_delta=9999
 
     context={'modelrun':modelrun,
              'latest_checkpoint':latest_ckpt,
@@ -71,7 +73,8 @@ def detail(request,modelrun_id,node_name):
              'training_ckpt_timedelta':training_ckpt_timedelta,
              'latest_snapshot':latest_snapshot,
              'snapshot_interval_type':snapshot_interval_type,
-             'snapshot_interval':snapshot_interval}
+             'snapshot_interval':snapshot_interval,
+             'snapshot_delta':snapshot_delta}
 
     return render(request,'wganbrowser/job/detail.html',context)
 

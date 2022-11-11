@@ -12,7 +12,7 @@
         <ul>
             {% if snapshot_interval_type == "CHECKPOINT" %}
             <li>Generating snapshots every {{ snapshot_interval }} (minimum) checkpoints since last snapshot checkpoint.</li>
-            <li>Current checkpoint delta is {{ latest_checkpoint }} minus {{ latest_snapshot.checkpoint }}</li>
+            <li>Current checkpoint delta is {{ snapshot_delta }}</li>
             {% else %}
             <li>Generating snapshots every {{ snapshot_interval }} seconds.</li>
             {% endif %}

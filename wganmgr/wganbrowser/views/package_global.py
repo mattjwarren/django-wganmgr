@@ -66,7 +66,6 @@ def waitfor_queryset(wait_period,query_set,max_waits=9999999):
     wait_count=0
     while True:
         if wait_count<max_waits:
-            print(len(query_set))
             if len(query_set)>0:#forces evaluation
                 return query_set
             else:
