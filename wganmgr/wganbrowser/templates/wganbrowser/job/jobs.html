@@ -5,7 +5,7 @@
     <br>Select to query node for job details.
         <ul>
             {% for job in jobs %}
-                <li> <a href="{% url 'wganbrowser:job_detail' job.modelrun.id job.node_name %}"> {{ job.modelrun.name }} running on {{ job.node_name }}</li>
+                <li> <a href="{% url 'wganbrowser:job_detail' job.modelrun.id job.node_name %}"> {{ job.modelrun.name }} </a> running on {{ job.node_name }}</li>
             {% endfor %}
         </ul>
     {% else %}

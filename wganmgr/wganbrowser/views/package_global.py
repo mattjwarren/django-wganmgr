@@ -2,6 +2,9 @@ from django.conf import settings
 from wganbrowser.jenkins_api import *
 from wganbrowser.models import *
 
+from uuid import uuid4
+from time import sleep
+
 jenkins=jenkins_helper(settings.JENKINS_URL,auth=(settings.JENKINS_USER,settings.JENKINS_PWD))
 
 accepted_args="""[--data_dir DATA_DIR dd]
@@ -58,7 +61,43 @@ def build_run_command_args_from_modelrun(modelrun):
     run_command_args+=iterate_record_for_run_command_args(modelrun.model.dataset)
     return run_command_args
 
-def fs_get_latest_ckpt_info(modelRun):
-    #gets latest checkpoint number and time from modelRun
-    #on training host
-    pass    
+
+def waitfor_queryset(wait_period,query_set,max_waits=9999999):
+    wait_count=0
+    while True:
+        if wait_count<max_waits:
+            print(len(query_set))
+            if len(query_set)>0:#forces evaluation
+                return query_set
+            else:
+                sleep(wait_period)
+                query_set=query_set.all()#forces result cache refresh
+                wait_count+=1
+        else:
+            break
+    return None
+
+def exec_shell(node_name,shell_string):
+    passthrough_token=str(uuid4())
+    queue_item=jenkins.client.build_job(
+        settings.JENKINS_PASSTHROUGH_JOB,
+        TARGET_NODE=node_name,
+        SQL_INSERT="insert into wganbrowser_x_message (text,token) values ('{%%STRING_VALUE%%}','%s');" % passthrough_token,
+        SHELL_STRING=shell_string,
+        JENKINS_DB_HOST_ADDRESS=settings.JENKINS_DB_HOST_ADDRESS,
+        JENKINS_DB_HOST_SSH_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SSH_CREDENTIALS_ID,
+        JENKINS_DB_HOST_SQL_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SQL_CREDENTIALS_ID,
+        JENKINS_DB_HOST_SQL_DB_NAME=settings.JENKINS_DB_HOST_SQL_DB_NAME,
+        JENKINS_DB_HOST_SSH_USERNAME=settings.JENKINS_DB_HOST_SSH_USERNAME
+    )
+    query_set=x_message.objects.all().filter(token=passthrough_token)
+    
+    query_set=waitfor_queryset(1,query_set,30)
+    if query_set:
+        x_msg=query_set.get()
+        stdout=x_msg.text
+        x_msg.delete()
+    else:
+        stdout=""
+    return stdout
+

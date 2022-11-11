@@ -10,9 +10,10 @@ from django.template import loader
 from wganbrowser.models import *
 from wganbrowser.forms import *
 from wganbrowser.strings import *
+from wganbrowser.shell_strings import *
 
 from time import sleep
-from uuid import uuid4
+from datetime import datetime
 
 from .package_global import *
 
@@ -38,32 +39,40 @@ def detail(request,modelrun_id,node_name):
     #modelrun instance
     #vi apassthorugh: last training checkpoint written and date/time
     #  -   ls -ltr {library_root}/{modelrun_path}/ | grep ckpt | tail -1
-    # '-rw-rw-r-- 1 matt matt    1361921 Nov  9 00:47 model.ckpt-6328.meta'
-    print("NODE NAME IS "+node_name)
+    # '-rw-rw-r-- 1 matt matt       3530 2022-11-11 02:56:39.869787709 +0000 model.ckpt-22280.index'
     modelrun=modelRun.objects.get(pk=modelrun_id)
     modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
-    passthrough_token=str(uuid4())
-    queue_item=jenkins.client.build_job(
-        settings.JENKINS_PASSTHROUGH_JOB,
-        TARGET_NODE=node_name,
-        SQL_INSERT="insert into wganbrowser_x_messages ('text','token') values ('{%%STRING_VALUE%%}','%s')" % passthrough_token,
-        SHELL_STRING="ls -ltr %s | grep ckpt | tail -1" % modelrun_path,
-        JENKINS_DB_HOST_ADDRESS=settings.JENKINS_DB_HOST_ADDRESS,
-        JENKINS_DB_HOST_SSH_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SSH_CREDENTIALS_ID,
-        JENKINS_DB_HOST_SQL_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SQL_CREDENTIALS_ID,
-        JENKINS_DB_HOST_SQL_DB_NAME=settings.JENKINS_DB_HOST_SQL_DB_NAME,
-        JENKINS_DB_HOST_SSH_USERNAME=settings.JENKINS_DB_HOST_SSH_USERNAME
-    )
-    while True:
-        try:
-            data=x_message.objects.get(token=passthrough_token)
-        except:
-            data=False
-        if data:
-            break
-        sleep(1)
+    query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun_path)
+    print(query_text)
+    tokens=query_text.split()
+    print(tokens[5:7])
+    date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
 
-    context={'job':data.text}
-    return render(request,'wganbrowser/job/detail.html')
+    dateobject=datetime.strptime(date_time_str,'%Y-%d-%m %H:%M:%S')
+    training_ckpt_timedelta=(datetime.now()-dateobject).total_seconds()
+    latest_ckpt=tokens[8].split('-')[1].split('.')[0]
+    latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')
+    latest_snapshot=None
+    if(latest_snapshots.count()>0):
+        latest_snapshot=latest_snapshots[0]
+    
+    basic_jobs=jenkins.running_builds()
+    for build,parms,node_name in basic_jobs:
+        for parm in parms:
+            if parm.name=='MODELRUN_ID' and int(parm.value)==modelrun_id:
+                snapshot_interval_type=[ p.value for p in parms if p.name=='MODEL_UPLOAD_INTERVAL_TYPE' ][0]
+                snapshot_interval=int([ p.value for p in parms if p.name=='UPLOAD_INTERVAL' ][0])
+
+
+    context={'modelrun':modelrun,
+             'latest_checkpoint':latest_ckpt,
+             'latest_train_checkpoint_datetime':dateobject,
+             'train_save_secs':modelrun.train_save_secs,
+             'training_ckpt_timedelta':training_ckpt_timedelta,
+             'latest_snapshot':latest_snapshot,
+             'snapshot_interval_type':snapshot_interval_type,
+             'snapshot_interval':snapshot_interval}
+
+    return render(request,'wganbrowser/job/detail.html',context)
 
 

@@ -133,4 +133,4 @@ class modelSnapshot(models.Model):
 
 class x_message(models.Model):
     text=models.TextField(max_length=2048,default="")
-    token=models.CharField(max_length=34,blank=False,unique=True)
+    token=models.CharField(max_length=64,blank=False,unique=True)

@@ -5,8 +5,6 @@ nav1 | nav2 | etc..
          ~ message ~
 -----------------------------
 
-Running jobs:
-
 Model Run Name:
 	* Last training checkpoint 12345 at date/time
 		- generating every modelrun train_summary_secs

@@ -1,6 +1,22 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Job detail..<br>
-    {{ job }}
+    <p>Job detail..</p>
+    <p>{{ modelrun.name }}:</p>
+    <ul>
+        <li>Last training checkpoint {{ latest_checkpoint }} at {{ latest_train_checkpoint_datetime }}</li>
+        <ul>
+            <li>Generating every {{ train_save_secs }} seconds.</li>
+            <li>{{ training_ckpt_timedelta }} seconds until next checkpoint.</li>
+        </ul>
+        <li>Last snapshot checkpoint {{ latest_snapshot.checkpoint }} at {{ latest_snapshot.creation_time }}</li>
+        <ul>
+            {% if snapshot_interval_type == "CHECKPOINT" %}
+            <li>Generating snapshots every {{ snapshot_interval }} (minimum) checkpoints since last snapshot checkpoint.</li>
+            <li>Current checkpoint delta is {{ latest_checkpoint }} minus {{ latest_snapshot.checkpoint }}</li>
+            {% else %}
+            <li>Generating snapshots every {{ snapshot_interval }} seconds.</li>
+            {% endif %}
+        </ul>
+    </ul>
 
 {% endblock %}
