@@ -2,11 +2,19 @@
 
 <link rel="stylesheet" href="{% static 'wganbrowser/style.css' %}">
 
-<div id="banner">{% block banner %}<img src="{% static 'wganbrowser/images/generic_headerbar.png' %}">{% endblock %}</div>
 
-<div id="navigation">
+
+
+
+
+<!-- Begin Wrapper -->
+<div id="wrapper">
+  <!-- Begin Header -->
+  <div id="header">{% block banner %}<img src="{% static 'wganbrowser/images/generic_headerbar.png' width=10% %}">{% endblock %}</div>
+  <!-- End Header -->
+  <!-- Begin Navigation -->
+  <div id="navigation">
     {% block navigation %}
-        <hr></hr>
         {% if user.is_authenticated %}
             <a href="{% url 'wganbrowser:models' %}">Models</a> | 
             <a href="{% url 'wganbrowser:modelruns' %}">Model Runs</a> | 
@@ -15,18 +23,27 @@
         {% else %}
             <a href="{% url 'login' %}">Login</a>
         {% endif %}
-        <hr></hr>
     {% endblock %}
-</div>
-
-<div id="messages">
+  </div>
     {% block messages %}
         {% if message %}
-            <p><center><b>{{ message }}</b></center></p>
+            <div id="messages">
+                <p><center><b>{{ message }}</b></center></p>
+            </div>
         {% endif %}
     {% endblock %}
-</div>
-
-<div id="content">{% block content %}{% endblock %}</div>
-
-<div id="content_menu">{% block content_menu %}{% endblock %}</div>
+    <!-- End Navigation -->
+  <!-- Begin Left Column -->
+  <div id="leftcolumn">
+    {% block content %}{% endblock %}
+  </div>
+  <!-- End Left Column -->
+  <!-- Begin Right Column -->
+  <div id="rightcolumn">
+    {% block content_menu %}{% endblock %}
+  </div>
+  <!-- End Right Column -->
+ </div>
+<!-- End Wrapper -->
+</body>
+</html>

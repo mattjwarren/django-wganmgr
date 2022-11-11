@@ -9,7 +9,6 @@
         </ul>
         Comments:
         <p>{{ modelrun.comments }}</p>
-        <hr></hr>
         {% if modelsnapshots %}
             Snapshots for {{ modelrun.name }}
             <ul>
@@ -20,7 +19,6 @@
         {% else %}
             No snapshots found.
         {% endif %}
-        <hr></hr>
         Parameters for run:
         <table>
             <tr valign="top">
@@ -88,8 +86,6 @@
 
 {% endblock %}
 {% block content_menu %}
-    <hr></hr>
     <a href="{% url 'wganbrowser:modelrun_delete' modelrun.id %}">Delete Everything!</a> | 
     <a href="{% url 'wganbrowser:modelrun_request' modelrun.id %}">Request</a>
-    <hr></hr>
 {% endblock %}
