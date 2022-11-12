@@ -7,62 +7,62 @@ body {
 
 #wrapper { 
  margin: 0 auto;
- width: 923px;
+ width: 920px;
 }
 
 #header {
  color: #333;
  width: 900px;
  float: left;
- padding: 10px;
- border: 1px solid #ccc;
+ margin: 0px 0px 0px 0px;
+ border: 0px solid #ccc;
+ padding: 10px 10px 10px 10px;
  height: 100px;
- margin: 10px 0px 0px 0px;
- background-color:#F3F2ED;
- background:#F6F0E0;
+ background-color:#063f74;
+ background:#063f74;
 }
 
 #navigation {
  float: left;
  width: 900px;
  color: #333;
- padding: 10px;
- border: 1px solid #ccc;
  margin: 0px 0px 0px 0px;
- background-color:#F3F2ED;
-}
+ border: 0px solid #ccc;
+ padding: 10px;
+ background-color:#d3d8da;
+} 
 
 #messages {
  float: left;
  width: 900px;
  color: #333;
- padding: 10px;
- border: 1px solid #ccc;
  margin: 0px 0px 0px 0px;
+ border: 0px solid #ccc;
+ padding: 10px;
  background-color:#8eca9b;
 }  
 
 #leftcolumn { 
  color: #333;
- border: 1px solid #ccc;
  margin: 0px 0px 0px 0px;
+ border: 0px solid #ccc;
  padding: 10px;
- height: 350px;
- width: 678px;
+ height: 100%;/*px;*/
+ width: 680px;
  float: left;
- background:#CCC8B3;
+ background:#b3b7cc;
 }
 
 #rightcolumn { 
  float: right;
  color: #333;
- border: 1px solid #ccc;
  margin: 0px 0px 0px 0px;
+ border: 0px solid #ccc;
  padding: 10px;
- height: 350px;
+ height: 100%;/*px;*/
  width: 200px;
  display: inline;
- background:#F6F0E0;
+ background:#e0e9f6;
  position: relative;
 }
 
@@ -76,5 +76,35 @@ div {
 }
 
 li {
+ margin: 1em;
  margin-left: 2em;
+}
+
+p {
+    margin: 0px;
+    border: 0px;
+    padding: 3px;
+}
+
+a:hover, a:visited, a:link, a:active 
+{
+    text-decoration: none;
+}
+table {
+    width: 100%;
+    font-family: Arial, Helvetica, sans-serif;
+    font-size: 12px;
+    margin-left: 1em;
+}
+
+tr {
+    vertical-align: top;
+}
+
+td {
+    padding: 10px 10px 10px 0px;
+}
+
+.section-header {
+    font-weight:bold;
 }

@@ -1,13 +1,11 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-   <p>Model Runs..</p>
-   <p>
-    <ul>
+   <p class="section-header">Model Runs..</p>
+   <ul>
     {% for modelrun in modelruns %}
         <li>{{ modelrun.model.name }} <a href="{% url 'wganbrowser:modelrun_detail' modelrun.id %}">{{ modelrun.name }}</a></li>
     {% endfor %}
     </ul>
-    </p>
 {% endblock %}
 {% block content_menu %}
     <a href="{% url 'wganbrowser:modelrun_create' %}">Create</a>

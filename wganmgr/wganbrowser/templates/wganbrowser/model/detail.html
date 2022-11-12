@@ -27,8 +27,8 @@
 
     {% endblock %}
 {% block content_menu %}
-    <a href="{% url 'wganbrowser:model_delete' model.id %}">Delete Everything!</a> | 
-    <a href="{% url 'wganbrowser:modelrun_create' %}">Create Run</a>
+    <p><a href="{% url 'wganbrowser:model_delete' model.id %}">Delete Everything!</a></p>
+    <p><a href="{% url 'wganbrowser:modelrun_create' %}">Create Run</a></p>
 {% endblock %}
 
 

@@ -1,85 +1,93 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
     {% if modelrun %}
-        Model Run: {{ modelrun.name }}
+        <p class="section-header">Model Run: {{ modelrun.name }}</p>
         <ul>
             <li>Model: <a href="{% url 'wganbrowser:model_detail' modelrun.model.id %}">{{ modelrun.model.name }}</a></li>
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' modelrun.model.dataset.id %}">{{ modelrun.model.dataset.name }}</a></li>
-            <li>Path: {{ modelrun.path }}</li>
+            <li>Library Path: {{ modelrun.path }}</li>
         </ul>
-        Comments:
+        <p class="section-header">Comments:</p>
         <p>{{ modelrun.comments }}</p>
+        <p>
         {% if modelsnapshots %}
-            Snapshots for {{ modelrun.name }}
-            <ul>
-                {% for modelsnapshot in modelsnapshots %}
-                    <li><a href="{% url 'wganbrowser:modelsnapshot_detail' modelsnapshot.id %}">{{ modelsnapshot.checkpoint }}</a></li>
-                {% endfor %}
-            </ul>
+            <p class="section-header">Snapshots...<br>
+                <p>|
+            {% for modelsnapshot in modelsnapshots %}
+                <a href="{% url 'wganbrowser:modelsnapshot_detail' modelsnapshot.id %}">{{ modelsnapshot.checkpoint }}</a> |
+            {% endfor %}
+                </p>
+            </p>
         {% else %}
-            No snapshots found.
+            <p>No snapshots found.</p>
         {% endif %}
-        Parameters for run:
-        <table>
-            <tr valign="top">
-                <td>
-                    <p><b>train_batch_size: </b>{{ modelrun.train_batch_size }}
-                    </p>
-                    <p><b>train_save_secs: </b>{{ modelrun.train_save_secs }}
-                    </p>
-                    <p><b>train_summary_secs: </b>{{ modelrun.train_summary_secs }}
-                    </p>
-                    <p><b>wavegan_batchnorm: </b>{{ modelrun.wavegan_batchnorm }}
-                    </p>
-                </td>
-                <td>
-                    <p><b>data_sample_rate: </b>{{ modelrun.data_sample_rate }}
-                    </p>
-                    <p><b>data_slice_len: </b>{{ modelrun.data_slice_len }}
-                    </p>
-                    <p><b>data_first_slice: </b>{{ modelrun.data_first_slice }}
-                    </p>
-                    <p><b>data_pad_end: </b>{{ modelrun.data_pad_end }}
-                    </p>
-                    <p><b>data_overlap_ratio: </b>{{ modelrun.data_overlap_ratio }}
-                    </p>
-                </td>
-                <td>
-                    <p><b>wavegan_dim: </b>{{ modelrun.wavegan_dim }}
-                    </p>
-                    <p><b>wavegan_latent_dim: </b>{{ modelrun.wavegan_latent_dim }}
-                    </p>
-                    <p><b>wavegan_disc_nupdates: </b>{{ modelrun.wavegan_disc_nupdates }}
-                    </p>
-                    <p><b>wavegan_disc_phaseshuffle: </b>{{ modelrun.wavegan_disc_phaseshuffle }}
-                    </p>
-                </td>
-                <td>
-                    <p><b>wavegan_genr_upsample: </b>{{ modelrun.wavegan_genr_upsample }}
-                    </p>
-                    <p><b>wavegan_genr_pp: </b>{{ modelrun.wavegan_genr_pp }}
-                    </p>
-                    <p><b>wavegan_genr_pp_len: </b>{{ modelrun.wavegan_genr_pp_len }}
-                    </p>
-                    <p><b>wavegan_kernel_len: </b>{{ modelrun.wavegan_kernel_len }}
-                    </p>
-                </td>
-                <td>
-                    <p><b>wavegan_disc_wgangp_beta1: </b>{{ modelrun.wavegan_disc_wgangp_beta1 }}
-                    </p>
-                    <p><b>wavegan_disc_wgangp_beta2: </b>{{ modelrun.wavegan_disc_wgangp_beta2 }}
-                    </p>
-                    <p><b>wavegan_disc_wgangp_learn: </b>{{ modelrun.wavegan_disc_wgangp_learn }}
-                    </p>
-                    <p><b>wavegan_genr_wgangp_beta1: </b>{{ modelrun.wavegan_genr_wgangp_beta1 }}
-                    </p>
-                    <p><b>wavegan_genr_wgangp_beta2: </b>{{ modelrun.wavegan_genr_wgangp_beta2 }}
-                    </p>
-                    <p><b>wavegan_genr_wgangp_learn: </b>{{ modelrun.wavegan_genr_wgangp_learn }}
-                    </p>
-                </td>
-            </tr>
-        </table>
+        </p>
+        <p class="section-header">Parameters for run:
+            <table>
+                <tr>
+                    <td>
+                        <p>train_batch_size: <b>{{ modelrun.train_batch_size }}</b>
+                        </p>
+                        <p>train_save_secs: <b>{{ modelrun.train_save_secs }}</b>
+                        </p>
+                        <p>train_summary_secs: <b>{{ modelrun.train_summary_secs }}</b>
+                        </p>
+                        <p>batchnorm: <b>{{ modelrun.wavegan_batchnorm }}</b>
+                        </p>
+                    </td>
+                    <td>
+                        <p>data_sample_rate: <b>{{ modelrun.data_sample_rate }}</b>
+                        </p>
+                        <p>data_slice_len: <b>{{ modelrun.data_slice_len }}</b>
+                        </p>
+                        <p>data_first_slice: <b>{{ modelrun.data_first_slice }}</b>
+                        </p>
+                        <p>data_pad_end: <b>{{ modelrun.data_pad_end }}</b>
+                        </p>
+                        <p>data_overlap_ratio: <b>{{ modelrun.data_overlap_ratio }}</b>
+                        </p>
+                    </td>
+                    <td>
+                        <p>dim: <b>{{ modelrun.wavegan_dim }}</b>
+                        </p>
+                        <p>latent_dim: <b>{{ modelrun.wavegan_latent_dim }}</b>
+                        </p>
+                        <p>disc_nupdates: <b>{{ modelrun.wavegan_disc_nupdates }}</b>
+                        </p>
+                        <p>disc_phaseshuffle: <b>{{ modelrun.wavegan_disc_phaseshuffle }}</b>
+                        </p>
+                    </td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>genr_upsample: <b>{{ modelrun.wavegan_genr_upsample }}</b>
+                        </p>
+                        <p>genr_pp: <b>{{ modelrun.wavegan_genr_pp }}</b>
+                        </p>
+                        <p>genr_pp_len: <b>{{ modelrun.wavegan_genr_pp_len }}</b>
+                        </p>
+                        <p>kernel_len: <b>{{ modelrun.wavegan_kernel_len }}</b>
+                        </p>
+                    </td>
+                    <td>
+                        <p>disc_wgangp_beta1: <b>{{ modelrun.wavegan_disc_wgangp_beta1 }}</b>
+                        </p>
+                        <p>disc_wgangp_beta2: <b>{{ modelrun.wavegan_disc_wgangp_beta2 }}</b>
+                        </p>
+                        <p>disc_wgangp_learn: <b>{{ modelrun.wavegan_disc_wgangp_learn }}</b>
+                        </p>
+                    </td>
+                    <td>
+                        <p>genr_wgangp_beta1: <b>{{ modelrun.wavegan_genr_wgangp_beta1 }}</b>
+                        </p>
+                        <p>genr_wgangp_beta2: <b>{{ modelrun.wavegan_genr_wgangp_beta2 }}</b>
+                        </p>
+                        <p>genr_wgangp_learn: <b>{{ modelrun.wavegan_genr_wgangp_learn }}</b>
+                        </p>
+                    </td>
+                </tr>
+            </table>
+        </p>
     {% else %}
         <p>Model {{ model_id }} not found.</p>
     {% endif %}
