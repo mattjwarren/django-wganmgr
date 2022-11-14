@@ -14,6 +14,7 @@ from wganbrowser.shell_strings import *
 
 from time import sleep
 from datetime import datetime
+import math
 
 from .package_global import *
 
@@ -47,7 +48,7 @@ def detail(request,modelrun_id,node_name):
     date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
 
     dateobject=datetime.strptime(date_time_str,'%Y-%m-%d %H:%M:%S')
-    training_ckpt_timedelta=(datetime.now()-dateobject).total_seconds()
+    training_ckpt_timedelta=round((modelrun.train_save_secs-((datetime.now()-dateobject).total_seconds()))/60,1)
     latest_ckpt=tokens[8].split('-')[1].split('.')[0]
     latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')
     latest_snapshot=None
