@@ -1,13 +1,13 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
     {% if model %}
-        Model: {{ model.name }}
+        <p class="section-header">{{ model.name }}</p>
         <ul>
             <li>Library: <a href="{% url 'wganbrowser:library_detail' model.library.id %}">{{ model.library.name }}</a></li>
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' model.dataset.id %}">{{ model.dataset.name }}</a></li>
         </ul>
         {% if runs_with_snapshot.items %}
-            Runs and latest snapshot for {{ model.name }}
+        <p class="section-header">Runs and latest snapshot</p>
             <ul>
                 {% for run,snapshot in runs_with_snapshot.items %}
                     <li><a href="{% url 'wganbrowser:modelrun_detail' run.id %}">{{ run.name }}</a>

@@ -1,12 +1,12 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Model snapshot {{ modelsnapshot.checkpoint }}
+    <p class="section-header">Snapshot {{ modelsnapshot.checkpoint }}</p>
     <ul>
-        <li>Created at: {{ modelsnapshot.creation_time }}</li>
-        <li>Size: {{ modelsnapshot.size_gb }} GB</li>
+        <li>{{ modelsnapshot.creation_time }}</li>
+        <li>{{ modelsnapshot.size_gb }} GB</li>
 
     </ul>
-    {{ modelsnapshot.d_loss_svg | safe }}<br>
-    {{ modelsnapshot.g_loss_svg | safe }}<br>
-    {{ modelsnapshot.global_step_svg | safe }}<br>
+    {{ modelsnapshot.d_loss_svg | safe }}
+    {{ modelsnapshot.g_loss_svg | safe }}
+    {{ modelsnapshot.global_step_svg | safe }}
 {% endblock %}

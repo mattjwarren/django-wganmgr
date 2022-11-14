@@ -1,6 +1,6 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Create Model Run..
+    <p class="section-header">Create Model Run</p>
     <form action="{% url 'wganbrowser:modelrun_save' %}" method="post">
         {% csrf_token %}
         {{ form.as_p }}

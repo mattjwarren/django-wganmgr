@@ -1,8 +1,8 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    Model run jobs in progress..
+    <p class="section-header">Model run jobs in progress..</p>
     {% if jobs %}
-    <br>Select to query for job details.
+    <p>Select to query for job details.</p>
         <ul>
             {% for job in jobs %}
                 <li> <a href="{% url 'wganbrowser:job_detail' job.modelrun.id job.node_name %}"> {{ job.modelrun.name }} </a> running on {{ job.node_name }}</li>

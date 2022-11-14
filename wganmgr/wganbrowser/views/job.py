@@ -46,7 +46,7 @@ def detail(request,modelrun_id,node_name):
     tokens=query_text.split()
     date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
 
-    dateobject=datetime.strptime(date_time_str,'%Y-%d-%m %H:%M:%S')
+    dateobject=datetime.strptime(date_time_str,'%Y-%m-%d %H:%M:%S')
     training_ckpt_timedelta=(datetime.now()-dateobject).total_seconds()
     latest_ckpt=tokens[8].split('-')[1].split('.')[0]
     latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')

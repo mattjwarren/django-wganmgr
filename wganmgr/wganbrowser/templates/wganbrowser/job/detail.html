@@ -1,6 +1,6 @@
 {% extends "wganbrowser/page_base.html" %}
 {% block content %}
-    <p>Job detail..</p>
+    <p class="section-header">Job detail..</p>
     <p>{{ modelrun.name }}:</p>
     <ul>
         <li>Last training checkpoint {{ latest_checkpoint }} at {{ latest_train_checkpoint_datetime }}</li>
@@ -18,5 +18,4 @@
             {% endif %}
         </ul>
     </ul>
-
 {% endblock %}

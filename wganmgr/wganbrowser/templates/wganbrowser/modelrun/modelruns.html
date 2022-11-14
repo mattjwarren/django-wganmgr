@@ -3,7 +3,10 @@
    <p class="section-header">Model Runs..</p>
    <ul>
     {% for modelrun in modelruns %}
-        <li>{{ modelrun.model.name }} <a href="{% url 'wganbrowser:modelrun_detail' modelrun.id %}">{{ modelrun.name }}</a></li>
+        <li class="section-header">{{ modelrun.model.name }}</li>
+        <ul>
+            <li><a href="{% url 'wganbrowser:modelrun_detail' modelrun.id %}">{{ modelrun.name }}</a></li>
+        </ul>
     {% endfor %}
     </ul>
 {% endblock %}
