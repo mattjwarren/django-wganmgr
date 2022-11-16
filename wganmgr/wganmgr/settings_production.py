@@ -133,6 +133,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
 LOGIN_REDIRECT_URL = '/wganbrowser/models'
+LOGIN_URL = '/a/accounts/login'
 
 # email needs setting up, in the meantime emails go to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
