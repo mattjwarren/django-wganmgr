@@ -55,6 +55,8 @@ def detail(request,modelrun_id,node_name):
     if(latest_snapshots.count()>0):
         latest_snapshot=latest_snapshots[0]
     
+    snapshot_interval_type="SECONDS"
+
     basic_jobs=jenkins.running_builds()
     for build,parms,node_name in basic_jobs:
         for parm in parms:
