@@ -161,7 +161,7 @@ STATIC_ROOT = "/var/www/html/static"
 if DEBUG:
     JENKINS_URL='http://matt-desktop.local:8080/'
 else:
-    JENKINS_URL='http://192.168.1.220:8080/'
+    JENKINS_URL='http://matt-desktop.local:8080/'
 
 JENKINS_USER='matt'
 JENKINS_PWD='matt'
