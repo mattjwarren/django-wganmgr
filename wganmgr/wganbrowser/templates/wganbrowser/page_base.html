@@ -21,14 +21,16 @@
         {% endif %}
     {% endblock %}
   </div>
+  <!-- End Navigation -->
+  <!-- Begin Messages -->
+  <div id="messages">
     {% block messages %}
         {% if message %}
-            <div id="messages">
                 <p><center><b>{{ message }}</b></center></p>
-            </div>
         {% endif %}
     {% endblock %}
-    <!-- End Navigation -->
+  </div>
+  <!-- End Messages -->
   <!-- Begin Left Column -->
   <div id="leftcolumn">
     {% block content %}{% endblock %}
