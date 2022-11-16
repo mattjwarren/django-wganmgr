@@ -15,10 +15,12 @@ Including another URLconf
 """
 from django.contrib import admin
 from django.urls import include, path
+from django.conf import settings
 
 urlpatterns = [
     path('wganbrowser/', include('wganbrowser.urls')),
-    path('admin/', admin.site.urls),
     path('accounts/', include('django.contrib.auth.urls')),
-    #path('', include('wganbrowser.urls')),
 ]
+
+if not settings.DEBUG:
+    urlpatterns.append(path('admin/', admin.site.urls))

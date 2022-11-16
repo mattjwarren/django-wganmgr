@@ -26,20 +26,34 @@ SECRET_KEY = 'django-insecure-2grl6bv%e6ngdh8at2w$fr$n3#s1vd6w2s&jlrs(!shd=x31+l
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["192.168.1.199","127.0.0.1"]
+if DEBUG:
+    ALLOWED_HOSTS = ["192.168.1.199","127.0.0.1"]
+else:
+    ALLOWED_HOSTS = ["*"]
 
 
 # Application definition
 
-INSTALLED_APPS = [
-    'wganbrowser.apps.WganbrowserConfig',
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-]
+if DEBUG:
+    INSTALLED_APPS = [
+        'wganbrowser.apps.WganbrowserConfig',
+        'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]
+else:
+    INSTALLED_APPS = [
+        'wganbrowser.apps.WganbrowserConfig',
+    #   'django.contrib.admin',
+        'django.contrib.auth',
+        'django.contrib.contenttypes',
+        'django.contrib.sessions',
+        'django.contrib.messages',
+        'django.contrib.staticfiles',
+    ]    
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
@@ -132,15 +146,23 @@ STATICFILES_FINDERS = (
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 # Redirect to home URL after login (Default redirects to /accounts/profile/)
-LOGIN_REDIRECT_URL = '/wganbrowser/models'
+if DEBUG:
+    LOGIN_REDIRECT_URL = '/wganbrowser/models'
+else:
+    LOGIN_REDIRECT_URL = '/a/wganbrowser/models'
+    LOGIN_URL = '/a/accounts/login'    
 
 # email needs setting up, in the meantime emails go to console
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
-
+STATIC_ROOT = "/var/www/html/static"
 #wganbrowser specific
-JENKINS_URL='http://matt-desktop.local:8080/'
+if DEBUG:
+    JENKINS_URL='http://matt-desktop.local:8080/'
+else:
+    JENKINS_URL='http://192.168.1.220:8080/'
+
 JENKINS_USER='matt'
 JENKINS_PWD='matt'
 
