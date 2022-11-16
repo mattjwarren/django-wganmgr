@@ -25,20 +25,19 @@
   <!-- Begin Messages -->
   <div id="messages">
     {% block messages %}
-        {% if message %}
-                <p><center><b>{{ message }}</b></center></p>
-        {% endif %}
     {% endblock %}
   </div>
   <!-- End Messages -->
   <!-- Begin Left Column -->
   <div id="leftcolumn">
-    {% block content %}{% endblock %}
+    {% block content %}
+    {% endblock %}
   </div>
   <!-- End Left Column -->
   <!-- Begin Right Column -->
   <div id="rightcolumn">
-    {% block content_menu %}{% endblock %}
+    {% block content_menu %}
+    {% endblock %}
   </div>
   <!-- End Right Column -->
  </div>
