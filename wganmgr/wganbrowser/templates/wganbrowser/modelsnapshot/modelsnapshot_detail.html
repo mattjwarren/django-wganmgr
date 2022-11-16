@@ -4,6 +4,7 @@
     <ul>
         <li>{{ modelsnapshot.creation_time }}</li>
         <li>{{ modelsnapshot.size_gb }} GB</li>
+        <li><a href="/wlse/models/{{ modelsnapshot.modelrun.name }}_{{ modelsnapshot.checkpoint }}.tar.gz">Download</a></li>
 
     </ul>
     {{ modelsnapshot.d_loss_svg | safe }}
