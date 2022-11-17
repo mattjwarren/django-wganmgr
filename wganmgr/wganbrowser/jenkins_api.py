@@ -7,12 +7,14 @@ from api4jenkins import Jenkins
 class jenkins_helper():
 
     def __init__(self,address,auth):
+        self.address=address
+        self.auth=auth
         self.client=Jenkins(address,auth=auth)
 
     def refresh_client(self):
         del(self.client)
         gc.collect()
-        self.client=Jenkins(address,auth=auth)
+        self.client=Jenkins(self.address,auth=self.auth)
 
     def is_running(self,job_name):
         self.refresh_client()
