@@ -20,6 +20,14 @@ class jenkins_helper():
         self.refresh_client()
         job=self.client.get_job(job_name)
         return job.building
+    
+    def modelrun_is_running(self,modelrun_id):
+        basic_jobs=self.running_builds()
+        for build,parms,node_name in basic_jobs:
+            for parm in parms:
+                if parm.name=='MODELRUN_ID' and int(parm.value)==modelrun_id:
+                    return True
+        return False
 
     def running_builds(self):
         self.refresh_client()

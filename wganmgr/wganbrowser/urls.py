@@ -39,6 +39,8 @@ urlpatterns = [
     path('job/jobs/',views.job.jobs,name='jobs'),
     #/wganbrowser/job/detail/modelrun_id/node_name/
     path('job/detail/<int:modelrun_id>/<str:node_name>/',views.job.detail,name='job_detail'),
+    #/wganbrowser/job/detail/modelrun_id/node_name/
+    path('job/halt/<int:modelrun_id>/<str:node_name>/',views.job.halt,name='job_halt'),
 
     #/wganbrowser/modelsnapshot_detail/{modelsnapshot_id}/
     path('modelsnapshot_detail/<int:modelsnapshot_id>/',views.modelsnapshot.modelsnapshot_detail,name='modelsnapshot_detail'),

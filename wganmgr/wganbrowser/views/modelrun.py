@@ -129,7 +129,13 @@ def post(request):
                 job_parameters
             )
             sleep(3)
-            return job.jobs(request)
+            jobs,message=job.get_jobs()
+            messages=list()
+            if message:
+                messages.append(message)
+            messages.append(JOBS_JOB_REQUESTED % modelrun.name)
+            context={'jobs':jobs,'messages':messages}
+            return render(request,'wganbrowser/job/jobs.html',context)
         else:
             #TODO: render bad form message and go to modelrun_request
             return modelruns(request)

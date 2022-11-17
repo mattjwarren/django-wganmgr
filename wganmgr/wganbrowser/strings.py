@@ -1,3 +1,6 @@
-MODELRUN_POST_ALREADY_RUNNING='A run is already active. Pause that run before continuing.'
+MODELRUN_POST_ALREADY_RUNNING='A run is already active. Halt that run before continuing.'
 MODELRUN_POST_RUN_REQUESTED='%s requested.'
 JOBS_UNMANAGED_JOB_IS_RUNNING='An unmanaged job appears to be running. Contact your system administrator.'
+JOBS_JOB_WILL_HALT='%s will halt within ~ 1 minute.'
+JOBS_JOB_REQUESTED='%s has been requested.'
+JOBS_JOB_NOT_FOUND='Job %s was not found.'

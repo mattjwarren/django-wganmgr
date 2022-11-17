@@ -15,6 +15,7 @@
             <a href="{% url 'wganbrowser:models' %}">Models</a> | 
             <a href="{% url 'wganbrowser:modelruns' %}">Model Runs</a> | 
             <a href="{% url 'wganbrowser:jobs' %}">Jobs</a> |
+            <a href="http://dgen.uk:8081/">Tensorboard</a> | 
             <a href="{% url 'logout' %}">Logout</a>
         {% else %}
             <a href="{% url 'login' %}">Login</a>
@@ -25,6 +26,13 @@
   <!-- Begin Messages -->
   <div id="messages">
     {% block messages %}
+      {% if message %}
+          <p>{{ message }}</p>
+      {% elif messages %}
+          {% for message in messages %}
+            <p>{{ message }}</p>
+          {% endfor %}
+      {% endif %}
     {% endblock %}
   </div>
   <!-- End Messages -->

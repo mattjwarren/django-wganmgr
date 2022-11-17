@@ -19,9 +19,7 @@ import math
 from .package_global import *
 
 
-
-@login_required
-def jobs(request):
+def get_jobs():
     basic_jobs=jenkins.running_builds()
     jobs=list()
     message=None
@@ -32,16 +30,27 @@ def jobs(request):
             jobs.append({'modelrun':modelrun,'node_name':node_name})
         else:
             message=JOBS_UNMANAGED_JOB_IS_RUNNING
+    return (jobs,message)
+
+
+@login_required
+def jobs(request):
+    jobs,message=get_jobs()
     context={'jobs':jobs,'message':message}
     return render(request,'wganbrowser/job/jobs.html',context)
 
 def detail(request,modelrun_id,node_name):
-    #we need,
-    #modelrun instance
-    #vi apassthorugh: last training checkpoint written and date/time
-    #  -   ls -ltr {library_root}/{modelrun_path}/ | grep ckpt | tail -1
-    # '-rw-rw-r-- 1 matt matt       3530 2022-11-11 02:56:39.869787709 +0000 model.ckpt-22280.index'
     modelrun=modelRun.objects.get(pk=modelrun_id)
+
+    if not jenkins.modelrun_is_running(modelrun_id):
+        jobs,message=get_jobs()
+        messages=list()
+        if message:
+            messages.append(message)
+        messages.append(JOBS_JOB_NOT_FOUND % modelrun.name)
+        context={'jobs':jobs,'messages':messages}
+        return render(request,'wganbrowser/job/jobs.html',context)
+
     modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
     query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun_path)
     tokens=query_text.split()
@@ -49,12 +58,15 @@ def detail(request,modelrun_id,node_name):
 
     dateobject=datetime.strptime(date_time_str,'%Y-%m-%d %H:%M:%S')
     training_ckpt_timedelta=round((modelrun.train_save_secs-((datetime.now()-dateobject).total_seconds()))/60,1)
+    if training_ckpt_timedelta<0:
+        training_ckpt_timedelta=round(modelrun.train_save_secs/60,1)
     latest_ckpt=tokens[8].split('-')[1].split('.')[0]
     latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')
     latest_snapshot=None
     if(latest_snapshots.count()>0):
         latest_snapshot=latest_snapshots[0]
     
+    #TODO: Fix this horrible 9999 override
     snapshot_interval_type="SECONDS"
 
     basic_jobs=jenkins.running_builds()
@@ -77,8 +89,23 @@ def detail(request,modelrun_id,node_name):
              'latest_snapshot':latest_snapshot,
              'snapshot_interval_type':snapshot_interval_type,
              'snapshot_interval':snapshot_interval,
-             'snapshot_delta':snapshot_delta}
+             'snapshot_delta':snapshot_delta,
+             'node_name':node_name}
 
     return render(request,'wganbrowser/job/detail.html',context)
+
+def halt(request,modelrun_id,node_name):
+    jobs,message=get_jobs()
+    modelrun=modelRun.objects.get(pk=modelrun_id)
+    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
+    touch_halt=exec_shell(node_name,SHELL_TOUCH_HALT % modelrun_path)
+    messages=list()
+    if message:
+        messages.append(message)
+    messages.append(JOBS_JOB_WILL_HALT % modelrun.name)
+    context={'jobs':jobs,'messages':messages}
+    return render(request,'wganbrowser/job/jobs.html',context)
+
+
 
 

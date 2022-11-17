@@ -3,6 +3,7 @@
     <p class="section-header">Job detail..</p>
     <p>{{ modelrun.name }}:</p>
     <ul>
+        <li>Executing on node {{ node_name }}</li>
         <li>Last training checkpoint {{ latest_checkpoint }} at {{ latest_train_checkpoint_datetime }}</li>
         <ul>
             <li>Generating every {{ train_save_secs }} seconds.</li>
@@ -18,4 +19,7 @@
             {% endif %}
         </ul>
     </ul>
+{% endblock %}
+{% block content_menu %}
+<a href="{% url 'wganbrowser:job_halt' modelrun.id node_name %}">Halt</a>
 {% endblock %}
