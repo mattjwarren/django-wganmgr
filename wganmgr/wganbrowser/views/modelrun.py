@@ -111,6 +111,7 @@ def post(request):
                 return render(request,'wganbrowser/modelrun/request.html',context)
 
             run_command_args=build_run_command_args_from_modelrun(modelrun)
+            jenkins.refresh_client() # should refresh when not using helper cmds
             queue_item=jenkins.client.build_job(
                 settings.JENKINS_TRAIN_JOB,
                 WAVEGAN_REPO_ROOT=settings.JENKINS_WAVEGAN_REPO_ROOT,
