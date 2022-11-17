@@ -111,22 +111,24 @@ def post(request):
                 return render(request,'wganbrowser/modelrun/request.html',context)
 
             run_command_args=build_run_command_args_from_modelrun(modelrun)
-            jenkins.refresh_client() # should refresh when not using helper cmds
-            queue_item=jenkins.client.build_job(
+            job_parameters={
+                'WAVEGAN_REPO_ROOT':settings.JENKINS_WAVEGAN_REPO_ROOT,
+                'UPLOAD_INTERVAL':data['upload_interval'],
+                'MODEL_UPLOAD_INTERVAL_TYPE':data['model_upload_interval_type'],
+                'TENSORBOARD_REFRESH_INTERVAL':data['tensorboard_refresh_interval'],
+                'BOARD_REFRESH_INTERVAL_TYPE':data['board_refresh_interval_type'],
+                'RUNS_ROOT':modelrun.model.library.path,
+                'MODEL':modelrun.path,
+                'RUN_COMMAND_ARGS':run_command_args,
+                'PYTHON_VENV_ACTIVATE':settings.JENKINS_PYENV_ACTIVATE,
+                'WGANMGR_REQUEST':True,
+                'MODELRUN_ID':modelrun.id
+            }
+            queue_item=jenkins.build(
                 settings.JENKINS_TRAIN_JOB,
-                WAVEGAN_REPO_ROOT=settings.JENKINS_WAVEGAN_REPO_ROOT,
-                UPLOAD_INTERVAL=data['upload_interval'],
-                MODEL_UPLOAD_INTERVAL_TYPE=data['model_upload_interval_type'],
-                TENSORBOARD_REFRESH_INTERVAL=data['tensorboard_refresh_interval'],
-                BOARD_REFRESH_INTERVAL_TYPE=data['board_refresh_interval_type'],
-                RUNS_ROOT=modelrun.model.library.path,
-                MODEL=modelrun.path,
-                RUN_COMMAND_ARGS=run_command_args,
-                PYTHON_VENV_ACTIVATE=settings.JENKINS_PYENV_ACTIVATE,
-                WGANMGR_REQUEST=True,
-                MODELRUN_ID=modelrun.id
+                job_parameters
             )
-            sleep(10)
+            sleep(3)
             return job.jobs(request)
         else:
             #TODO: render bad form message and go to modelrun_request

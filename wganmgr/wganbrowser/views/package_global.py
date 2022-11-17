@@ -78,16 +78,19 @@ def waitfor_queryset(wait_period,query_set,max_waits=9999999):
 
 def exec_shell(node_name,shell_string):
     passthrough_token=str(uuid4())
-    queue_item=jenkins.client.build_job(
+    job_parameters={
+        'TARGET_NODE':node_name,
+        'SQL_INSERT':"insert into wganbrowser_x_message (text,token) values ('{%%STRING_VALUE%%}','%s');" % passthrough_token,
+        'SHELL_STRING':shell_string,
+        'JENKINS_DB_HOST_ADDRESS':settings.JENKINS_DB_HOST_ADDRESS,
+        'JENKINS_DB_HOST_SSH_CREDENTIALS_ID':settings.JENKINS_DB_HOST_SSH_CREDENTIALS_ID,
+        'JENKINS_DB_HOST_SQL_CREDENTIALS_ID':settings.JENKINS_DB_HOST_SQL_CREDENTIALS_ID,
+        'JENKINS_DB_HOST_SQL_DB_NAME':settings.JENKINS_DB_HOST_SQL_DB_NAME,
+        'JENKINS_DB_HOST_SSH_USERNAME':settings.JENKINS_DB_HOST_SSH_USERNAME
+    }
+    queue_item=jenkins.build(
         settings.JENKINS_PASSTHROUGH_JOB,
-        TARGET_NODE=node_name,
-        SQL_INSERT="insert into wganbrowser_x_message (text,token) values ('{%%STRING_VALUE%%}','%s');" % passthrough_token,
-        SHELL_STRING=shell_string,
-        JENKINS_DB_HOST_ADDRESS=settings.JENKINS_DB_HOST_ADDRESS,
-        JENKINS_DB_HOST_SSH_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SSH_CREDENTIALS_ID,
-        JENKINS_DB_HOST_SQL_CREDENTIALS_ID=settings.JENKINS_DB_HOST_SQL_CREDENTIALS_ID,
-        JENKINS_DB_HOST_SQL_DB_NAME=settings.JENKINS_DB_HOST_SQL_DB_NAME,
-        JENKINS_DB_HOST_SSH_USERNAME=settings.JENKINS_DB_HOST_SSH_USERNAME
+        job_parameters
     )
     query_set=x_message.objects.all().filter(token=passthrough_token)
     
