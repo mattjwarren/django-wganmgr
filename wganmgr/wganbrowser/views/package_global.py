@@ -103,3 +103,18 @@ def exec_shell(node_name,shell_string):
         stdout=""
     return stdout
 
+
+#TODO: see regroup template tag (or dont, see ordering problem)
+#https://docs.djangoproject.com/en/4.1/ref/templates/builtins/#regroup
+#def merge_records_by_field(record_list,field_name):
+    #pass
+    #take list of record objects, merge them into a dict of list of objects by field as key
+    #ie
+    #['a(.field=1)','a(.field=2)','a(.field=1)','a(.field=2)']
+    #to
+    #{1:[a,a,..],
+    # 2:[a,a,..]}
+
+
+
+
