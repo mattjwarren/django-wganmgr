@@ -2,10 +2,12 @@
 {% block content %}
    <p class="section-header">Model Runs..</p>
    <ul>
-    {% for modelrun in modelruns %}
-        <li class="section-header">{{ modelrun.model.name }}</li>
+    {% for model_name,modelruns in modelruns.items %}
+        <li class="section-header">{{ model_name }}</li>
         <ul>
-            <li><a href="{% url 'wganbrowser:modelrun_detail' modelrun.id %}">{{ modelrun.name }}</a></li>
+            {% for modelrun in modelruns %}
+                <li><a href="{% url 'wganbrowser:modelrun_detail' modelrun.id %}">{{ modelrun.name }}</a></li>
+            {% endfor %}
         </ul>
     {% endfor %}
     </ul>

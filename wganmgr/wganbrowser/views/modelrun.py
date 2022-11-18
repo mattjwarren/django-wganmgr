@@ -21,8 +21,9 @@ from .package_global import *
 
 @login_required
 def modelruns(request):
-    all_modelruns=modelRun.objects.all()
-    context={'modelruns':all_modelruns}
+    modelruns=modelRun.objects.all()
+    modelruns=group_records_by_field(modelruns,['model','name'])
+    context={'modelruns':modelruns}
     return render(request,'wganbrowser/modelrun/modelruns.html',context)
 
 @login_required
