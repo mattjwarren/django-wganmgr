@@ -1,0 +1,15 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    {% if action == "create" %}
+    <p class="section-header">Create Library..</p>
+        <form action="{% url 'wganbrowser:library_create' %}" method="post">
+    {% else %}
+    <p class="section-header">Edit Library..</p>
+    <p>When relocating a library the page may take a while to reload.</p>
+        <form action="{% url 'wganbrowser:library_edit' library.id %}" method="post">
+    {% endif %}
+            {% csrf_token %}
+            {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}

@@ -1,0 +1,17 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    <p class="section-header">Libraries</p>
+    <ul>
+    {% for node_affinity,libs in libraries.items %}
+        <li>Storage node {{ node_affinity }}</li>
+        <ul>
+        {% for lib in libs %}
+            <li><a href="{% url 'wganbrowser:library_detail' lib.id %}">{{ lib.name }}</a></li>
+        {% endfor %}
+        </ul>
+    {% endfor %}
+    </ul>
+{% endblock %}
+{% block content_menu %}
+    <a href="{% url 'wganbrowser:library_create' %}">Create</a>
+{% endblock %}
