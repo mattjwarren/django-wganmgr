@@ -1,9 +1,11 @@
 from django.conf import settings
 from wganbrowser.jenkins_api import *
 from wganbrowser.models import *
+from wganbrowser.shell_strings import *
 
 from uuid import uuid4
 from time import sleep
+import re
 
 jenkins=jenkins_helper(settings.JENKINS_URL,auth=(settings.JENKINS_USER,settings.JENKINS_PWD))
 
@@ -117,7 +119,18 @@ def group_records_by_field(records,field_names):
         else:
             grouped_dict[field_val].append(record)
     return grouped_dict
-        
+
+def bad_chars_in_path(path):
+    return re.match(".*[^A-Za-z0-9_/-].*",path)
+
+def does_path_exist_on_node(node,path):
+    return exec_shell(node,SHELL_DOES_PATH_EXIST % path)=="True"
+
+def create_path_on_node(node,path):
+    return exec_shell(node, SHELL_MKDIR_P % path)=="True"
+
+def move_path(node,from_path,to_path):
+    return exec_shell(node, SHELL_MV % (from_path,to_path))=="True"
 
 
 

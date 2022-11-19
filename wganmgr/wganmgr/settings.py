@@ -194,3 +194,5 @@ MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'
 
 #how we exec shell commands on the training node
 TRAINING_HOST_EXECUTION_MODE='JENKINS_PASSTHROUGH' #or SSH
+
+NODE_STORAGE_ROOT='/home/matt'

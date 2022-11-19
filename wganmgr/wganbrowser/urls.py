@@ -42,9 +42,18 @@ urlpatterns = [
     #/wganbrowser/job/detail/modelrun_id/node_name/
     path('job/halt/<int:modelrun_id>/<str:node_name>/',views.job.halt,name='job_halt'),
 
-    #/wganbrowser/modelsnapshot_detail/{modelsnapshot_id}/
-    path('modelsnapshot_detail/<int:modelsnapshot_id>/',views.modelsnapshot.modelsnapshot_detail,name='modelsnapshot_detail'),
+    #/wganbrowser/modelsnapshot/detail/{modelsnapshot_id}/
+    path('modelsnapshot/detail/<int:modelsnapshot_id>/',views.modelsnapshot.detail,name='modelsnapshot_detail'),
 
-    #/wganbrowser/library_detail/{library_id}/
-    path('library_detail/<int:library_id>/',views.library.library_detail,name='library_detail'),
+    #/wganbrowser/library/libraries/
+    path('library/libraries/',views.library.libraries,name='libraries'),
+    #/wganbrowser/library/detail/{library_id}/
+    path('library/detail/<int:library_id>/',views.library.detail,name='library_detail'),
+    #/wganbrowser/library/edit/{library_id}/
+    path('library/edit/<int:library_id>/',views.library.edit,name='library_edit'),
+    #/wganbrowser/library/delete/{library_id}/
+    path('library/delete/<int:library_id>/',views.library.delete,name='library_delete'),
+    #/wganbrowser/library/create/{library_id}/
+    path('library/create/',views.library.create,name='library_create'),
+
 ]

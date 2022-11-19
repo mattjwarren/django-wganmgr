@@ -18,7 +18,7 @@ from .package_global import *
 
 
 @login_required
-def modelsnapshot_detail(request,modelsnapshot_id):
+def detail(request,modelsnapshot_id):
     modelsnapshot=modelSnapshot.objects.get(pk=modelsnapshot_id)
     context={'modelsnapshot':modelsnapshot}
-    return render (request,'wganbrowser/modelsnapshot/modelsnapshot_detail.html',context)
+    return render (request,'wganbrowser/modelsnapshot/detail.html',context)

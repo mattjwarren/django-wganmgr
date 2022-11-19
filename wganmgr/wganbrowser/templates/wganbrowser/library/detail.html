@@ -1,0 +1,21 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    <p class="section-header">{{ library.name }}</p>
+    <ul>
+        <li> {{ library.path }}</li>
+        <li> Storage node, {{ library.node_affinity }}</li>
+{% endblock %}
+{% block content_menu %}
+    <p><a href="{% url 'wganbrowser:library_edit' library.id %}">Edit</a></p>
+    <p><a href="{% url 'wganbrowser:library_delete' library.id %}">Delete Everything!</a></p>
+{% endblock %}
+
+
+
+
+
+
+
+
+
+

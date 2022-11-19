@@ -1,6 +1,8 @@
 from django.forms import ModelForm
 from .models import model as modelClass
 from .models import modelRun
+from .models import library
+
 from django import forms
 
 class modelForm(ModelForm):
@@ -22,6 +24,11 @@ class modelRunForm(ModelForm):
                   'wavegan_genr_wgangp_beta1','wavegan_genr_wgangp_beta2','wavegan_genr_wgangp_learn'
                   
         ]
+
+class libraryCreateEditForm(ModelForm):
+    class Meta:
+        model=library
+        fields=['name','path','node_affinity'] 
 
 class modelRunRequestForm(forms.Form):
     upload_interval = forms.IntegerField(initial=5000,
