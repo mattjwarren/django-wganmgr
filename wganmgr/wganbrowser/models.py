@@ -4,7 +4,8 @@ from os import path
 # Create your models here.
 class library(models.Model):
     name = models.CharField(max_length=64,blank=False,unique=True)
-    path = models.CharField(max_length=255,blank=False,unique=True,help_text="Full filesystem path to library dir.")
+    path = models.CharField(max_length=255,blank=False,unique=True,help_text="Filesystem path relative to settings.NODE_STORAGE_ROOT")
+    node_affinity = models.CharField(max_length=128,default="ubuntu-wavegan-2222")
 
     def __str__(self):
         return self.name+'@'+self.path
