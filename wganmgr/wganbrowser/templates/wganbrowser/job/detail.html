@@ -21,5 +21,6 @@
     </ul>
 {% endblock %}
 {% block content_menu %}
-<a href="{% url 'wganbrowser:job_halt' modelrun.id node_name %}">Halt</a>
+<p><a href="{% url 'wganbrowser:job_halt' modelrun.id node_name %}">Halt</a></p>
+<p><a href="{% url 'wganbrowser:job_upload_snapshot' modelrun.id node_name %}">Upload snapshot</a></p>
 {% endblock %}

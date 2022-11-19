@@ -4,6 +4,7 @@ JOBS_UNMANAGED_JOB_IS_RUNNING='An unmanaged job appears to be running. Contact y
 JOBS_JOB_WILL_HALT='%s will halt within ~ 1 minute.'
 JOBS_JOB_REQUESTED='%s has been requested.'
 JOBS_JOB_NOT_FOUND='Job %s was not found.'
+JOBS_JOB_WILL_UPLOAD_MODEL='Job %s will upload a model snapshot within the next few minutes.'
 LIBRARY_STORAGE_NODE_UNKNOWN='Storage node %s is unknown.'
 LIBRARY_BAD_CHARS_IN_PATH='Only the characters A-Z a-z 0-9 _ / are allowed in path names.'
 LIBRARY_PATH_ALREADY_USED='Path %s already exists.'

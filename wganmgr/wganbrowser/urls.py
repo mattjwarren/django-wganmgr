@@ -41,6 +41,8 @@ urlpatterns = [
     path('job/detail/<int:modelrun_id>/<str:node_name>/',views.job.detail,name='job_detail'),
     #/wganbrowser/job/detail/modelrun_id/node_name/
     path('job/halt/<int:modelrun_id>/<str:node_name>/',views.job.halt,name='job_halt'),
+    #/wganbrowser/job/upload_snapshot/modelrun_id/node_name/
+    path('job/upload_snapshot/<int:modelrun_id>/<str:node_name>/',views.job.force_model_snapshot,name='job_upload_snapshot'),
 
     #/wganbrowser/modelsnapshot/detail/{modelsnapshot_id}/
     path('modelsnapshot/detail/<int:modelsnapshot_id>/',views.modelsnapshot.detail,name='modelsnapshot_detail'),

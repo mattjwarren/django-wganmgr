@@ -107,6 +107,20 @@ def halt(request,modelrun_id,node_name):
     context={'jobs':jobs,'messages':messages}
     return render(request,'wganbrowser/job/jobs.html',context)
 
+def force_model_snapshot(request,modelrun_id,node_name):
+    jobs,message=get_jobs()
+    modelrun=modelRun.objects.get(pk=modelrun_id)
+    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
+    touch_upload_model=exec_shell(node_name,SHELL_TOUCH_UPLOAD_MODEL % modelrun_path)
+    messages=list()
+    if message:
+        messages.append(message)
+    messages.append(JOBS_JOB_WILL_UPLOAD_MODEL % modelrun.name)
+    context={'jobs':jobs,'messages':messages}
+    return render(request,'wganbrowser/job/jobs.html',context)
+
+
+
 
 
 
