@@ -120,7 +120,7 @@ def create(request):
                 return render(request,'wganbrowser/library/create_edit.html',context)
 
             new_library=library(name=data['name'],
-                                path=full_path,
+                                path=data['path'],
                                 node_affinity=data['node_affinity'])
             new_library.save()
             return libraries(request)
