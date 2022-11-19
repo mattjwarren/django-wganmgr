@@ -52,7 +52,7 @@ def detail(request,modelrun_id,node_name):
         context={'jobs':jobs,'messages':messages}
         return render(request,'wganbrowser/job/jobs.html',context)
 
-    modelrun_path=modelrun.model.library.path,modelrun.path
+    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
     query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun_path)
     tokens=query_text.split()
     date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
