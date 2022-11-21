@@ -52,8 +52,8 @@ def detail(request,modelrun_id,node_name):
         context={'jobs':jobs,'messages':messages}
         return render(request,'wganbrowser/job/jobs.html',context)
 
-    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
-    query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun_path)
+    #modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
+    query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun.full_path())
     tokens=query_text.split()
     date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
 
@@ -98,8 +98,7 @@ def detail(request,modelrun_id,node_name):
 def halt(request,modelrun_id,node_name):
     jobs,message=get_jobs()
     modelrun=modelRun.objects.get(pk=modelrun_id)
-    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
-    touch_halt=exec_shell(node_name,SHELL_TOUCH_HALT % modelrun_path)
+    touch_halt=exec_shell(node_name,SHELL_TOUCH_HALT % modelrun.full_path())
     messages=list()
     if message:
         messages.append(message)
@@ -110,8 +109,7 @@ def halt(request,modelrun_id,node_name):
 def force_model_snapshot(request,modelrun_id,node_name):
     jobs,message=get_jobs()
     modelrun=modelRun.objects.get(pk=modelrun_id)
-    modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
-    touch_upload_model=exec_shell(node_name,SHELL_TOUCH_UPLOAD_MODEL % modelrun_path)
+    touch_upload_model=exec_shell(node_name,SHELL_TOUCH_UPLOAD_MODEL % modelrun.full_path())
     messages=list()
     if message:
         messages.append(message)

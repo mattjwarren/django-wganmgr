@@ -1,5 +1,6 @@
 from django.db import models
-from os import path
+from django.conf import settings
+import os
 
 # Create your models here.
 class library(models.Model):
@@ -10,8 +11,8 @@ class library(models.Model):
     def __str__(self):
         return self.name+'@'+self.path
 
-    def path_exists(self):
-        return path.isdir(self.path)
+    def full_path(self):
+        return os.path.join(settings.NODE_STORAGE_ROOT,self.path,"")
 
     @classmethod
     def by_strname(cls,strname):
@@ -19,6 +20,7 @@ class library(models.Model):
         return cls.objects.get(name=name)
 
 class dataset(models.Model):
+    #data_dir not path as used as parameter name to run command
     data_dir = models.CharField(max_length=512,blank=False,help_text="Full filesystem path to dataset dir.")
     name = models.CharField(max_length=255,blank=False,unique=True)
     data_normalize = models.BooleanField(default=False,help_text="Normalize all the audio files before training?")
@@ -28,8 +30,8 @@ class dataset(models.Model):
     def __str__(self):
         return self.name
 
-    def path_exists(self):
-        return path.isdir(self.path)
+    def full_path(self):
+        return os.path.join(self.data_dir,"")
 
     @classmethod
     def by_strname(cls,strname):
@@ -92,13 +94,13 @@ class modelRun(models.Model):
     #TODO: when request modelRun, get to select which of the nodes vailable to run it on.
     #in mutlinode environment, means we rstart on the specific node because data is there
     #OR pull data over to new node from old node etc..
-    training_node_affinity=models.CharField(max_length=128,blank=True,default="")
+    node_affinity=models.CharField(max_length=128,blank=True,default="ubuntu-wavegan-2222")
 
     def __str__(self):
         return str(self.model)+' : '+self.name
 
-    def path_exists(self):
-        return path.isdir(self.path)
+    def full_path(self):
+        return os.path.join(settings.NODE_STORAGE_ROOT,self.model.library.path,self.path,"")
 
     @classmethod
     def by_strname(cls,strname):
@@ -112,23 +114,27 @@ class modelSnapshot(models.Model):
     d_loss_svg = models.TextField(default="")
     g_loss_svg = models.TextField(default="")
     global_step_svg = models.TextField(default="")
-    #path, together with MODEL_SNAPSHOT_PACKAGES_ROOT config value should lead to the model .tar.gz
+    #path, together with MODEL_SNAPSHOT_PACKAGES_WEBROOT config value should lead to the model .tar.gz
     path = models.CharField(max_length=255,blank=True,unique=True)
     creation_time = models.DateTimeField(auto_now_add=True,blank=True)
     size_gb = models.FloatField(default=0.0)
-
-
 
     def __str__(self):
         return str(self.modelRun)+' : '+str(self.checkpoint)
 
     def path_exists(self):
-        return path.isdir(self.path)
+        return os.path.isdir(self.path)
+
+    def web_path(self):
+        return os.path.join(settings.MODEL_SNAPSHOT_PACKAGES_WEBROOT,self.path)
+    
+    def fs_path(self):
+        return os.path.join(settings.MODEL_SNAPSHOT_PACKAGES_FS_ROOT,self.path)
 
     @classmethod
     def by_strname(cls,strname):
         library,model_name,modelrun_name,checkpoint=strname.split(':')
-        return cls.objects.get(modelRun__name=name,checkpoint=checkpoint)
+        return cls.objects.get(modelRun__name=modelrun_name,checkpoint=checkpoint)
 
     #https://docs.djangoproject.com/en/4.1/intro/tutorial02/
 

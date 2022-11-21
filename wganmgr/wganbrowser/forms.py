@@ -21,8 +21,8 @@ class modelRunForm(ModelForm):
                   'wavegan_disc_nupdates','wavegan_disc_phaseshuffle',
                   'wavegan_genr_upsample','wavegan_genr_pp','wavegan_genr_pp_len','wavegan_kernel_len',
                   'wavegan_disc_wgangp_beta1','wavegan_disc_wgangp_beta2','wavegan_disc_wgangp_learn',
-                  'wavegan_genr_wgangp_beta1','wavegan_genr_wgangp_beta2','wavegan_genr_wgangp_learn'
-                  
+                  'wavegan_genr_wgangp_beta1','wavegan_genr_wgangp_beta2','wavegan_genr_wgangp_learn',
+                  'node_affinity'    
         ]
 
 class libraryCreateEditForm(ModelForm):

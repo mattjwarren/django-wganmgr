@@ -190,7 +190,9 @@ JENKINS_APP_HOST_SSH_CREDENTIALS_ID='' #if empty, jenkins will rely on node user
 JENKINS_APP_HOST_ADDRESS='ubuntu-1'
 
 #construct model url from model path name
-MODEL_SNAPSHOT_PACKAGES_WEBROOT='https://dgen.uk/wlse/models/'
+#See also wgan-publish-model.groovy SNAPSHOT_PACKAGES_FS_ROOT
+MODEL_SNAPSHOT_PACKAGES_WEBROOT='/wlse/models'
+MODEL_SNAPSHOT_PACKAGES_FS_ROOT='/var/www/html/wlse/models'
 
 #how we exec shell commands on the training node
 TRAINING_HOST_EXECUTION_MODE='JENKINS_PASSTHROUGH' #or SSH
