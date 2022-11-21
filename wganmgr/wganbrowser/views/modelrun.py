@@ -140,7 +140,7 @@ def post(request):
                 'MODEL_UPLOAD_INTERVAL_TYPE':data['model_upload_interval_type'],
                 'TENSORBOARD_REFRESH_INTERVAL':data['tensorboard_refresh_interval'],
                 'BOARD_REFRESH_INTERVAL_TYPE':data['board_refresh_interval_type'],
-                'RUNS_ROOT':modelrun.model.library.path,
+                'RUNS_ROOT':modelrun.model.library.full_path(),
                 'MODEL':modelrun.path,
                 'RUN_COMMAND_ARGS':run_command_args,
                 'PYTHON_VENV_ACTIVATE':settings.JENKINS_PYENV_ACTIVATE,
