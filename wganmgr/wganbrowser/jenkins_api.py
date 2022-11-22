@@ -29,6 +29,14 @@ class jenkins_helper():
                     return True
         return False
 
+    def get_modelrun_build(self,modelrun_id):
+        basic_jobs=self.running_builds()
+        for build,parms,node_name in basic_jobs:
+            for parm in parms:
+                if parm.name=='MODELRUN_ID' and int(parm.value)==modelrun_id:
+                    return build
+        return None
+
     def running_builds(self):
         self.refresh_client()
         for node_name in settings.JENKINS_TRAINING_NODES:

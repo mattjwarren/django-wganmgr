@@ -117,6 +117,19 @@ def force_model_snapshot(request,modelrun_id,node_name):
     context={'jobs':jobs,'messages':messages}
     return render(request,'wganbrowser/job/jobs.html',context)
 
+def console_log(request,modelrun_id,node_name):
+    modelrun=modelRun.objects.get(pk=modelrun_id)
+    context={'modelrun':modelrun,
+            'node_name':node_name}
+
+    build=jenkins.get_modelrun_build(modelrun_id)
+    if not build:
+        context.update({'message': JOBS_JOB_NOT_FOUND % modelrun.name})
+        return (request,'wganbrowser/job/console_log.html',context)
+    jenkins_log=build.console_text()
+    context.update({'jenkins_log':jenkins_log})
+    return render(request,'wganbrowser/job/console_log.html',context)
+
 
 
 
