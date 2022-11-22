@@ -64,8 +64,10 @@ def detail(request,modelrun_id,node_name):
     latest_ckpt=tokens[8].split('-')[1].split('.')[0]
     latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')
     latest_snapshot=None
-    if(latest_snapshots.count()>0):
-        latest_snapshot=latest_snapshots[0]
+
+    if latest_snapshots:
+        if(latest_snapshots.count()>0):
+            latest_snapshot=latest_snapshots[0]
     
     #TODO: Fix this horrible 9999 override
     snapshot_interval_type="SECONDS"
@@ -77,10 +79,10 @@ def detail(request,modelrun_id,node_name):
                 snapshot_interval_type=[ p.value for p in parms if p.name=='MODEL_UPLOAD_INTERVAL_TYPE' ][0]
                 snapshot_interval=int([ p.value for p in parms if p.name=='UPLOAD_INTERVAL' ][0])
 
-    if snapshot_interval_type=='CHECKPOINT':
+    if latest_snapshot and snapshot_interval_type=='CHECKPOINT':
         snapshot_delta=int(latest_ckpt)-latest_snapshot.checkpoint
     else:
-        snapshot_delta=9999
+        snapshot_delta=0000
 
     context={'modelrun':modelrun,
              'latest_checkpoint':latest_ckpt,
