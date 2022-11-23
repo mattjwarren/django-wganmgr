@@ -44,6 +44,7 @@ def edit(request,library_id):
 
     if request.method=='POST':
         form=libraryCreateEditForm(request.POST,instance=lib)
+        context.update({'form':form})
         if form.is_valid():
             data=form.cleaned_data
             if not data['node_affinity'] in settings.JENKINS_TRAINING_NODES:
@@ -51,8 +52,7 @@ def edit(request,library_id):
                 return render(request,'wganbrowser/library/create_edit.html',context)
             
             if bad_chars_in_path(data['path']):
-                context.update({'form':form,
-                                'message': LIBRARY_BAD_CHARS_IN_PATH})
+                context.update({'message': LIBRARY_BAD_CHARS_IN_PATH})
                 return render(request,'wganbrowser/library/create_edit.html',context)                
 
             if data['path'].startswith('/'):

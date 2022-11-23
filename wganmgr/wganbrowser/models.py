@@ -26,7 +26,8 @@ class dataset(models.Model):
     data_normalize = models.BooleanField(default=False,help_text="Normalize all the audio files before training?")
     data_num_channels = models.IntegerField(default=1,help_text="Channels in the audio data.")
     data_fast_wav = models.BooleanField(default=True,help_text="Use fast wav loading.")
-    
+    node_affinity = models.CharField(max_length=128,blank=True,default="ubuntu-wavegan-2222")
+
     def __str__(self):
         return self.name
 

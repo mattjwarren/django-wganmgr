@@ -12,8 +12,9 @@
   <div id="navigation">
     {% block navigation %}
         {% if user.is_authenticated %}
-          <a href="{% url 'wganbrowser:libraries' %}">Libraries</a> | 
-          <a href="{% url 'wganbrowser:models' %}">Models</a> | 
+        <a href="{% url 'wganbrowser:libraries' %}">Libraries</a> | 
+        <a href="{% url 'wganbrowser:datasets' %}">Datasets</a> | 
+        <a href="{% url 'wganbrowser:models' %}">Models</a> | 
           <a href="{% url 'wganbrowser:modelruns' %}">Model Runs</a> | 
           <a href="{% url 'wganbrowser:jobs' %}">Jobs</a> |
           <a href="http://dgen.uk:8081/">Tensorboard</a> | 

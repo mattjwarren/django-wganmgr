@@ -2,6 +2,8 @@ from django.forms import ModelForm
 from .models import model as modelClass
 from .models import modelRun
 from .models import library
+from .models import dataset
+
 
 from django import forms
 
@@ -25,10 +27,21 @@ class modelRunForm(ModelForm):
                   'node_affinity'    
         ]
 
+class datasetForm(ModelForm):
+    class Meta:
+        model = dataset
+        fields = ['name','data_dir','data_normalize',
+                  'data_num_channels','data_fast_wav','node_affinity'
+        ]
+    dataset_file = forms.FileField()
+
+
 class libraryCreateEditForm(ModelForm):
     class Meta:
         model=library
         fields=['name','path','node_affinity'] 
+
+
 
 class modelRunRequestForm(forms.Form):
     upload_interval = forms.IntegerField(initial=5000,
