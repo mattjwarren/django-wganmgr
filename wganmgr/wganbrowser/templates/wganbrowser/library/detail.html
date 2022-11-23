@@ -7,7 +7,7 @@
 {% endblock %}
 {% block content_menu %}
     <p><a href="{% url 'wganbrowser:library_edit' library.id %}">Edit</a></p>
-    <p><a href="{% url 'wganbrowser:library_delete' library.id %}">Delete Everything!</a></p>
+    <p><a href="{% url 'wganbrowser:library_delete' library.id %}">Delete</a> (This will also delete all items linked to this library)</p>
 {% endblock %}
 
 

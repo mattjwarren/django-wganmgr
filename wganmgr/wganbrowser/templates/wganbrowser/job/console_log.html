@@ -7,6 +7,6 @@
 {% block content_menu %}
 <p><a href="{% url 'wganbrowser:job_halt' modelrun.id node_name %}">Halt</a></p>
 <p><a href="{% url 'wganbrowser:job_upload_snapshot' modelrun.id node_name %}">Upload snapshot</a></p>
-<p><a href="{% url 'wganbrowser:job_detail' modelrun.id node_name %}">Job Detail..</a></p>
-<p><a href="{% url 'wganbrowser:job_console_log' modelrun.id node_name %}">Refresh log..</a></p>
+<p><a href="{% url 'wganbrowser:job_detail' modelrun.id node_name %}">Job Detail</a></p>
+<p><a href="{% url 'wganbrowser:job_console_log' modelrun.id node_name %}">Refresh log</a></p>
 {% endblock %}
