@@ -68,6 +68,13 @@ body {
  position: relative;
 }
 
+#scrollabletextbox {
+    height: 500px;
+    width: 680px;
+    overflow:scroll;
+    resize:none;
+}
+
 img {
  width: 100%;
  height: 100%;

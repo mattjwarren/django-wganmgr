@@ -77,6 +77,7 @@ def detail(request,modelrun_id,node_name):
         latest_snapshot=latest_snapshots[0]
     
     snapshot_interval_type=None
+    snapshot_interval=0
 
     basic_jobs=jenkins.running_builds()
     for build,parms,node_name in basic_jobs:
@@ -136,7 +137,7 @@ def console_log(request,modelrun_id,node_name):
     if not build:
         context.update({'message': JOBS_JOB_NOT_FOUND % modelrun.name})
         return (request,'wganbrowser/job/console_log.html',context)
-    jenkins_log=[ line.decode() for line in build.console_text() ]
+    jenkins_log='\n'.join([ line.decode() for line in build.console_text() if b'[Pipeline]' not in line ])
 
     context.update({'jenkins_log':jenkins_log})
     return render(request,'wganbrowser/job/console_log.html',context)
