@@ -9,6 +9,7 @@
             <li>Generating every {{ train_save_secs }} seconds.</li>
             <li>{{ training_ckpt_timedelta }} minutes until next checkpoint.</li>
         </ul>
+        {% if latest_snapshot %}
         <li>Last snapshot checkpoint {{ latest_snapshot.checkpoint }} at {{ latest_snapshot.creation_time }}</li>
         <ul>
             {% if snapshot_interval_type == "CHECKPOINT" %}
@@ -18,10 +19,13 @@
             <li>Generating snapshots every {{ snapshot_interval }} seconds.</li>
             {% endif %}
         </ul>
+        {% else %}
+            <li>No snapshot has been created yet.</li>
+        {% endif %}
     </ul>
 {% endblock %}
 {% block content_menu %}
 <p><a href="{% url 'wganbrowser:job_halt' modelrun.id node_name %}">Halt</a></p>
-<p><a href="{% url 'wganbrowser:job_upload_snapshot' modelrun.id node_name %}">Upload snapshot</a></p>
+<p><a href="{% url 'wganbrowser:job_upload_snapshot' modelrun.id node_name %}">Take snapshot</a></p>
 <p><a href="{% url 'wganbrowser:job_console_log' modelrun.id node_name %}">Console log..</a></p>
 {% endblock %}

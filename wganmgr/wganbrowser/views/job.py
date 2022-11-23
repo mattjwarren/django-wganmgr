@@ -52,25 +52,31 @@ def detail(request,modelrun_id,node_name):
         context={'jobs':jobs,'messages':messages}
         return render(request,'wganbrowser/job/jobs.html',context)
 
-    #modelrun_path="%s/%s/" % (modelrun.model.library.path,modelrun.path)
-    query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun.full_path())
-    tokens=query_text.split()
-    date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
+    #New jobs take a few seconds to write the first checkpoint file
+    ckpt_found=False
+    while not ckpt_found:
+        query_text=exec_shell(node_name,SHELL_GET_NEWEST_CKPT_FILE % modelrun.full_path())
+        tokens=query_text.split()
+        try:
+            date_time_str=("%s %s" % tuple(tokens[5:7])).split('.')[0]
+        except:
+            sleep(1)
+            continue
+        ckpt_found=True
 
-    dateobject=datetime.strptime(date_time_str,'%Y-%m-%d %H:%M:%S')
-    training_ckpt_timedelta=round((modelrun.train_save_secs-((datetime.now()-dateobject).total_seconds()))/60,1)
-    if training_ckpt_timedelta<0:
-        training_ckpt_timedelta=round(modelrun.train_save_secs/60,1)
+    train_ckpt_date=datetime.strptime(date_time_str,'%Y-%m-%d %H:%M:%S')
+    train_ckpt_timedelta=round((modelrun.train_save_secs-((datetime.now()-train_ckpt_date).total_seconds()))/60,1)
+    if train_ckpt_timedelta<0:
+        train_ckpt_timedelta=round(modelrun.train_save_secs/60,1)
     latest_ckpt=tokens[8].split('-')[1].split('.')[0]
+
     latest_snapshots=modelSnapshot.objects.filter(modelRun=modelrun.id).order_by('-checkpoint')
     latest_snapshot=None
 
     if latest_snapshots:
-        if(latest_snapshots.count()>0):
-            latest_snapshot=latest_snapshots[0]
+        latest_snapshot=latest_snapshots[0]
     
-    #TODO: Fix this horrible 9999 override
-    snapshot_interval_type="SECONDS"
+    snapshot_interval_type=None
 
     basic_jobs=jenkins.running_builds()
     for build,parms,node_name in basic_jobs:
@@ -81,14 +87,16 @@ def detail(request,modelrun_id,node_name):
 
     if latest_snapshot and snapshot_interval_type=='CHECKPOINT':
         snapshot_delta=int(latest_ckpt)-latest_snapshot.checkpoint
+    elif latest_snapshot and snapshot_interval_type=='SECONDS':
+        snapshot_delta=(datetime.now()-latest_snapshot.creation_time).total_seconds()
     else:
-        snapshot_delta=0000
+        snapshot_delta=0
 
     context={'modelrun':modelrun,
              'latest_checkpoint':latest_ckpt,
-             'latest_train_checkpoint_datetime':dateobject,
+             'latest_train_checkpoint_datetime':train_ckpt_date,
              'train_save_secs':modelrun.train_save_secs,
-             'training_ckpt_timedelta':training_ckpt_timedelta,
+             'training_ckpt_timedelta':train_ckpt_timedelta,
              'latest_snapshot':latest_snapshot,
              'snapshot_interval_type':snapshot_interval_type,
              'snapshot_interval':snapshot_interval,
@@ -128,7 +136,8 @@ def console_log(request,modelrun_id,node_name):
     if not build:
         context.update({'message': JOBS_JOB_NOT_FOUND % modelrun.name})
         return (request,'wganbrowser/job/console_log.html',context)
-    jenkins_log=build.console_text()
+    jenkins_log=[ line.decode() for line in build.console_text() ]
+
     context.update({'jenkins_log':jenkins_log})
     return render(request,'wganbrowser/job/console_log.html',context)
 
