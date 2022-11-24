@@ -4,7 +4,7 @@
 
     {% for dataset in datasets %}
     <ul>
-        <li><p class="section-header">{{ dataset.name }}</p></li>
+        <li><p class="section-header"><a href="{% url 'wganbrowser:dataset_detail' dataset.id %}">{{ dataset.name }}</a></p></li>
         <table>
             <tr>
                 <td colspan="3">{{ dataset.data_dir}}</td>

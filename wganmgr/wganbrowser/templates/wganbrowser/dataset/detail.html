@@ -1,0 +1,21 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    <p class="section-header">{{ dataset.name }}</p>
+    <table>
+        <tr>
+            <td colspan="3">{{ dataset.data_dir}}</td>
+        </tr>
+        <tr>
+            <td colspan="3">Storage node, {{ dataset.node_affinity}}</td>
+        </tr>
+        <tr>
+            <td>{% if dataset.data_normalize %}Is {% else %}Not {% endif %}normalized when training.</td>
+            <td>{{ dataset.data_num_channels }} Channels.</td>
+            <td>{% if dataset.data_fast_wav %}Will {% else %}Won't {% endif %}use fast wav loading.</td>
+        </tr>
+    </table>
+{% endblock %}
+{% block content_menu %}
+    <p><a href="{% url 'wganbrowser:dataset_delete' dataset.id %}">Delete</a> (This will also delete all items linked to this dataset)</p>
+{% endblock %}
+

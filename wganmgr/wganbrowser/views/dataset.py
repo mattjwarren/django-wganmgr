@@ -77,5 +77,15 @@ def handle_dataset_upload(request,dataset_record,dataset_file):
 
 
 @login_required
+def delete(request,dataset_id):
+    dset=dataset.objects.get(pk=dataset_id)
+    context={'message':DATASET_DELETED % dset.name}
+    dset.delete()
+    return render(request,'wganbrowser/dataset/datasets.html',context)
+
+@login_required
 def detail(request,dataset_id):
-    return HttpResponse("Looking at details for dataset</br> %s" % str(get_object_or_404(dataset,pk=dataset_id)))
+    dset=dataset.objects.get(pk=dataset_id)
+    num_files=exec_shell(dset.node_affinity,"ls -ltr %s | wc -l" % dset.data_dir ).strip()
+    context={'dataset':dset, 'num_files':num_files}
+    return render(request,'wganbrowser/dataset/detail.html',context)

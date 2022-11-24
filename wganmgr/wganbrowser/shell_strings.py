@@ -10,5 +10,7 @@ SHELL_DOES_PATH_EXIST='[[ -d %s ]] && echo True || echo False'
 SHELL_MKDIR_P="mkdir -p %s && echo True || echo False"
 #any valid bash mv pair
 SHELL_MV="mv %s %s && echo True || echo False"
-#get dataset file after upload to node TODO: sort out settings parameters properly
+#get dataset bundle and unpack TODO: remove hardcoded hosting host
 SHELL_GET_DATASET_BUNDLE_AND_UNPACK="mkdir -p %s && scp ubuntu-1:/tmp/%s %s/ && cd %s/ && tar -xzvf %s && rm %s/%s && echo True || echo False"
+
+

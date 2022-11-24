@@ -19,4 +19,4 @@ DATASET_BAD_CHARS_IN_PATH='Only the characters A-Z a-z 0-9 _ / are allowed in da
 DATASET_ABSOLUTE_PATH='Cannot use a data dir starting with /'
 DATASET_PATH_ALREADY_USED='Path %s already exists.'
 DATASET_ERROR_RECEIVING_AND_UNPACKING='Error receiving and unpacking dataset file. This may be dangerous. Contact your system administrator immediatley!'
-
+DATASET_DELETED='Dataset %s deleted.'
