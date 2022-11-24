@@ -81,6 +81,8 @@ def delete(request,dataset_id):
     dset=dataset.objects.get(pk=dataset_id)
     context={'message':DATASET_DELETED % dset.name}
     dset.delete()
+    datasets=dataset.objects.all()
+    context.update({'datasets':datasets})
     return render(request,'wganbrowser/dataset/datasets.html',context)
 
 @login_required
