@@ -10,7 +10,7 @@
         </tr>
         <tr>
             <td>{% if dataset.data_normalize %}Is {% else %}Not {% endif %}normalized when training.</td>
-            <td>{{ dataset.data_num_channels }} Channels.</td>
+            <td>{{ dataset.data_num_channels }} Channel{{ dataset.data_num_channels|pluralize }}.</td>
             <td>{% if dataset.data_fast_wav %}Will {% else %}Won't {% endif %}use fast wav loading.</td>
         </tr>
     </table>
