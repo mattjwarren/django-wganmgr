@@ -6,6 +6,7 @@
             <li>Model: <a href="{% url 'wganbrowser:model_detail' modelrun.model.id %}">{{ modelrun.model.name }}</a></li>
             <li>Dataset: <a href="{% url 'wganbrowser:dataset_detail' modelrun.model.dataset.id %}">{{ modelrun.model.dataset.name }}</a></li>
             <li>Library Path: {{ modelrun.path }}</li>
+            <li>Training node: {{ modelrun.node_affinity }}</li>
         </ul>
         <p class="section-header">Comments:</p>
         <p>{{ modelrun.comments }}</p>
