@@ -3,10 +3,10 @@
     <p class="section-header">{{ dataset.name }}</p>
     <table>
         <tr>
-            <td colspan="3">{{ dataset.data_dir}}</td>
+            <td colspan="3">{{ dataset.data_dir }}</td>
         </tr>
         <tr>
-            <td colspan="3">Storage node, {{ dataset.node_affinity}}</td>
+            <td colspan="3">{{ num_files }} files on storage node {{ dataset.node_affinity }}</td>
         </tr>
         <tr>
             <td>{% if dataset.data_normalize %}Is {% else %}Not {% endif %}normalized when training.</td>
