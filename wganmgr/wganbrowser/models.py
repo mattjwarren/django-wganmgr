@@ -21,7 +21,7 @@ class library(models.Model):
 
 class dataset(models.Model):
     #data_dir not path as used as parameter name to run command
-    data_dir = models.CharField(max_length=512,blank=False,help_text="Full filesystem path to dataset dir.")
+    data_dir = models.CharField(max_length=512,blank=False,help_text="Path to dataset dir.")
     name = models.CharField(max_length=255,blank=False,unique=True)
     data_normalize = models.BooleanField(default=False,help_text="Normalize all the audio files before training?")
     data_num_channels = models.IntegerField(default=1,help_text="Channels in the audio data.")
