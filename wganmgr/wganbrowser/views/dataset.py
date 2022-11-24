@@ -86,6 +86,6 @@ def delete(request,dataset_id):
 @login_required
 def detail(request,dataset_id):
     dset=dataset.objects.get(pk=dataset_id)
-    num_files=exec_shell(dset.node_affinity,"ls -ltr %s | wc -l" % dset.data_dir ).strip()
+    num_files=int(exec_shell(dset.node_affinity,SHELL_GET_NUM_FILES_IN_DIR % dset.data_dir ).strip())-1
     context={'dataset':dset, 'num_files':num_files}
     return render(request,'wganbrowser/dataset/detail.html',context)

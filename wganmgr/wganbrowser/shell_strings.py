@@ -12,5 +12,7 @@ SHELL_MKDIR_P="mkdir -p %s && echo True || echo False"
 SHELL_MV="mv %s %s && echo True || echo False"
 #get dataset bundle and unpack TODO: remove hardcoded hosting host
 SHELL_GET_DATASET_BUNDLE_AND_UNPACK="mkdir -p %s && scp ubuntu-1:/tmp/%s %s/ && cd %s/ && tar -xzvf %s && rm %s/%s && echo True || echo False"
+#get num files in dir (needs 1 subtracting)
+SHELL_GET_NUM_FILES_IN_DIR="ls -ltr %s | wc -l"
 
 
