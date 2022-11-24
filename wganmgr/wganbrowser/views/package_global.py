@@ -135,20 +135,14 @@ def move_path(node,from_path,to_path):
     return exec_shell(node, SHELL_MV % (from_path,to_path))=="True"
 
 def get_dataset_bundle_and_unpack(node,data_dir,filename,DEBUG=False):
-    if DEBUG:
-        return exec_shell(node,DEBUG_SHELL_GET_DATASET_BUNDLE_AND_UNPACK % (data_dir,
-                                                                                        filename,
-                                                                                        data_dir,
-                                                                                        data_dir,
-                                                                                        filename)
-        )=='True'
-    else:
-        return exec_shell(node,SHELL_GET_DATASET_BUNDLE_AND_UNPACK % (data_dir,
-                                                                                        filename,
-                                                                                        data_dir,
-                                                                                        data_dir,
-                                                                                        filename)
-        ).split()[-1].strip()=='True'
+    return exec_shell(node,SHELL_GET_DATASET_BUNDLE_AND_UNPACK % (data_dir,
+                                                                filename,
+                                                                data_dir,
+                                                                data_dir,
+                                                                filename,
+                                                                data_dir,
+                                                                filename)
+    ).split()[-1].strip()=='True'
 
 
 
