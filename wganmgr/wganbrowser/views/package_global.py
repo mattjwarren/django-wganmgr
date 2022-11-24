@@ -148,7 +148,7 @@ def get_dataset_bundle_and_unpack(node,data_dir,filename,DEBUG=False):
                                                                                         data_dir,
                                                                                         data_dir,
                                                                                         filename)
-        )=='True'
+        ).split()[-1].strip()=='True'
 
 
 
