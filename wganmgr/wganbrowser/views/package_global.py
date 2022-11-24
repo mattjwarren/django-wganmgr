@@ -140,16 +140,12 @@ def get_dataset_bundle_and_unpack(node,data_dir,filename,DEBUG=False):
                                                                                         filename,
                                                                                         data_dir,
                                                                                         data_dir,
-                                                                                        filename,
-                                                                                        data_dir,
                                                                                         filename)
         )=='True'
     else:
         return exec_shell(node,SHELL_GET_DATASET_BUNDLE_AND_UNPACK % (data_dir,
                                                                                         filename,
                                                                                         data_dir,
-                                                                                        data_dir,
-                                                                                        filename,
                                                                                         data_dir,
                                                                                         filename)
         )=='True'
