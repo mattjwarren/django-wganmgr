@@ -43,7 +43,7 @@ def create(request):
 
             if not data['data_dir'].startswith(settings.NODE_DATASET_ROOT):
                 if not data['data_dir'].startswith('/'):
-                    data['data_dir']=os.path.join(settings.NODE_DATASET_ROOT,data['path'])
+                    data['data_dir']=os.path.join(settings.NODE_DATASET_ROOT,data['data_dir'])
                 else:
                     context.update({'message':DATASET_ABSOLUTE_PATH})
                     return render(request,'wganbrowser/dataset/create.html',context)
