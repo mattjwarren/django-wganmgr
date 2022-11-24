@@ -13,6 +13,7 @@ from wganbrowser.jenkins_api import *
 from wganbrowser.strings import *
 
 from time import sleep
+from uuid import uuid4
 
 from .package_global import *
 
@@ -24,8 +25,10 @@ def datasets(request):
 
 @login_required
 def create(request):
+    context={}
     if request.method=='POST':
         form=datasetForm(request.POST,request.FILES)
+        print("FILES: %s" % len(request.FILES))
         context={'form':form}
         if form.is_valid():
             data=form.cleaned_data
@@ -50,23 +53,28 @@ def create(request):
                 return render(request,'wganbrowser/dataset/create.html',context)
             #create record
 
-            new_dataset=dataset(**data)
-            if handle_dataset_upload(dataset,request.FILES['dataset_file']):
+            new_dataset=dataset(name=data['name'], data_dir=data['data_dir'], data_normalize=data['data_normalize'],
+                                data_num_channels=data['data_num_channels'],
+                                data_fast_wav=data['data_fast_wav'],
+                                node_affinity=data['node_affinity'])
+            if handle_dataset_upload(request,new_dataset,request.FILES['dataset_file']):
                 new_dataset.save()
+                return datasets(request)
             else:
-                pass
-                #problem unpakcing and saving file
+                context.update({'message':DATASET_ERROR_RECEIVING_AND_UNPACKING})
+                return render(request,'wganbrowser/dataset/create.html',context)
     else:
         form=datasetForm()
     context={'form':form}
     return render(request,'wganbrowser/dataset/create.html',context)
 
 @login_required
-def handle_dataset_upload(dataset_record,dataset_file):
-    with open('/tmp/temp_file.tar.gz','wb+') as packed_file:
+def handle_dataset_upload(request,dataset_record,dataset_file):
+    with open('/tmp/%s' % dataset_file.name,'wb+') as packed_file:
         for chunk in dataset_file.chunks():
             packed_file.write(chunk)
-#TODO from here
+    return get_dataset_bundle_and_unpack(dataset_record.node_affinity,dataset_record.data_dir,dataset_file.name,DEBUG=settings.DEBUG)
+
 
 @login_required
 def detail(request,dataset_id):

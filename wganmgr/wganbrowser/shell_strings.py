@@ -10,3 +10,6 @@ SHELL_DOES_PATH_EXIST='[[ -d %s ]] && echo True || echo False'
 SHELL_MKDIR_P="mkdir -p %s && echo True || echo False"
 #any valid bash mv pair
 SHELL_MV="mv %s %s && echo True || echo False"
+#get dataset file after upload to node TODO: sort out settings parameters properly
+SHELL_GET_DATASET_BUNDLE_AND_UNPACK="mkdir -p %s && scp ubuntu-1:/tmp/%s %s/ && tar -xzvf %s/%s && rm %s/%s && echo True || echo False"
+DEBUG_SHELL_GET_DATASET_BUNDLE_AND_UNPACK="mkdir -p %s && scp /tmp/%s %s/ && tar -xzvf %s/%s && rm %s/%s && echo True || echo False"

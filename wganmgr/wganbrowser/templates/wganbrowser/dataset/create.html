@@ -1,0 +1,9 @@
+{% extends "wganbrowser/page_base.html" %}
+{% block content %}
+    <p class="section-header">Create Dataset..</p>
+    <form action="{% url 'wganbrowser:dataset_create' %}" method="post" enctype="multipart/form-data">
+        {% csrf_token %}
+        {{ form.as_p }}
+        <input type="submit" value="Submit">
+    </form>
+{% endblock %}
