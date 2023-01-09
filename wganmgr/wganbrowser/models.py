@@ -64,15 +64,19 @@ class modelRun(models.Model):
     path = models.CharField(max_length=255,blank=False,unique=True,help_text="The filesystem path relative to the model library root that will store this run")
     name = models.CharField(max_length=255,blank=False,unique=True)
     comments = models.TextField(max_length=1024,default="...")
-    train_batch_size = models.IntegerField(default=32,help_text="Training batch size. Smaller trains faster, but learning is more erratic. Powers of 2.")
+    train_batch_size = models.IntegerField(default=64,help_text="Training batch size. Smaller trains faster, but learning is more erratic. Powers of 2.")
     train_save_secs = models.IntegerField(default=3600,help_text="How often a model checkpoint is created. This is not how often a snapshot is created.")
     train_summary_secs = models.IntegerField(default=180,help_text="How often an event summary is written. This is not how often the tensorboard view is refreshed")
     wavegan_batchnorm = models.BooleanField(default=False,help_text="Should a training batch be normalized before processing?")
-    data_pad_end = models.BooleanField(default=False,help_text="When training audio is shorter than slice length and using data_first_slice, pad the training audio to data_slice_len.")
-    data_first_slice = models.BooleanField(default=False,help_text="Use only the first slice of each training audio sample.")
+    data_pad_end = models.BooleanField(default=True,help_text="When training audio is shorter than slice length and using data_first_slice, pad the training audio to data_slice_len.")
+    data_first_slice = models.BooleanField(default=True,help_text="Use only the first slice of each training audio sample.")
     data_overlap_ratio = models.FloatField(default=0.0,help_text="When slicing audio for training, the overlap ratio of slices.")
     data_sample_rate = models.IntegerField(default=44100,help_text="Sample rate of generated audio samples.")
-    data_slice_len = models.IntegerField(default=65536,help_text="Slice length of audio used when training and length of generated audio samples. In samples.")
+    data_slice_len = models.IntegerField(default=65536,
+                                        choices=[('65536','65536'),
+                                                ('32768','32768'),
+                                                ('16384','16384')],
+                                                help_text="Slice length of audio used when training and length of generated audio samples. In samples.")
     wavegan_dim = models.IntegerField(default=64,help_text="Model dimensionality. Number of parameters the model uses to describe a sound.")
     wavegan_disc_nupdates = models.IntegerField(default=5,help_text="How many discriminator learning steps are made before making a generator learning step.")
     wavegan_disc_phaseshuffle = models.IntegerField(default=2,help_text="How much phaseshuffle is applied to the discriminator to prevent it using phase discrepancies to reject the generator.")
