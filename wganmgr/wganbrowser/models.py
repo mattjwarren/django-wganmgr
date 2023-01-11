@@ -73,9 +73,9 @@ class modelRun(models.Model):
     data_overlap_ratio = models.FloatField(default=0.0,help_text="When slicing audio for training, the overlap ratio of slices.")
     data_sample_rate = models.IntegerField(default=44100,help_text="Sample rate of generated audio samples.")
     data_slice_len = models.IntegerField(default=65536,
-                                        choices=[('65536','65536'),
-                                                ('32768','32768'),
-                                                ('16384','16384')],
+                                        choices=[(65536,'65536'),
+                                                (32768,'32768'),
+                                                (16384,'16384')],
                                                 help_text="Slice length of audio used when training and length of generated audio samples. In samples.")
     wavegan_dim = models.IntegerField(default=64,help_text="Model dimensionality. Number of parameters the model uses to describe a sound.")
     wavegan_disc_nupdates = models.IntegerField(default=5,help_text="How many discriminator learning steps are made before making a generator learning step.")
